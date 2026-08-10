@@ -153,7 +153,7 @@ function App() {
         <div>
           <h1 className="app-title">AUTOFFCS</h1>
           <p className="app-subtitle">
-            BRUTALIST TIMETABLE GENERATOR
+            TIMETABLE GENERATOR
           </p>
         </div>
         <div className="header-links">

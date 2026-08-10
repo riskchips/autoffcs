@@ -146,19 +146,19 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', padding: '2rem', maxWidth: '1800px', margin: '0 auto', gap: '2rem' }}>
+    <div className="app-wrapper">
       
       {/* HEADER */}
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: '4px solid #111', paddingBottom: '1rem' }}>
+      <header className="app-header">
         <div>
-          <h1 style={{ fontSize: '4rem', fontWeight: 900, letterSpacing: '-2px', lineHeight: 1 }}>AUTOFFCS</h1>
-          <p style={{ fontSize: '1.2rem', fontWeight: 600, background: '#111', color: '#ffeb3b', display: 'inline-block', padding: '0.2rem 0.5rem', marginTop: '0.5rem' }}>
-             TIMETABLE GENERATOR
+          <h1 className="app-title">AUTOFFCS</h1>
+          <p className="app-subtitle">
+            BRUTALIST TIMETABLE GENERATOR
           </p>
         </div>
-        <div style={{ textAlign: 'right' }}>
-          <p style={{ fontWeight: 800, fontSize: '1.2rem' }}>MADE BY ARNAB</p>
-          <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+        <div className="header-links">
+          <p style={{ fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.5rem' }}>MADE BY ARNAB</p>
+          <div className="links-row">
             <button onClick={() => setIsDarkMode(!isDarkMode)} className="brutal-button" style={{ padding: '0.5rem', fontSize: '0.9rem', background: isDarkMode ? '#fff' : '#111', color: isDarkMode ? '#111' : '#fff' }}>
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />} {isDarkMode ? 'LIGHT' : 'DARK'}
             </button>
@@ -233,16 +233,16 @@ function App() {
         </div>
 
         {/* TIMETABLE AREA */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%', overflow: 'hidden' }}>
           {timetables.length > 0 ? (
             <>
-              <div className="brutal-box" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem' }}>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+              <div className="brutal-box timetable-controls">
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
                   <button className="brutal-button" onClick={() => setCurrentIndex(c => Math.max(0, c - 1))} disabled={currentIndex === 0} style={{ padding: '0.5rem' }}><ArrowLeft /></button>
-                  <span style={{ fontWeight: 800, fontSize: '1.2rem' }}>OPTION {currentIndex + 1} OF {timetables.length}</span>
+                  <span style={{ fontWeight: 800, fontSize: '1.2rem', whiteSpace: 'nowrap' }}>OPTION {currentIndex + 1} OF {timetables.length}</span>
                   <button className="brutal-button" onClick={() => setCurrentIndex(c => Math.min(timetables.length - 1, c + 1))} disabled={currentIndex === timetables.length - 1} style={{ padding: '0.5rem' }}><ArrowRight /></button>
                 </div>
-                <div style={{ fontWeight: 800, fontSize: '1.2rem', background: '#111', color: '#4caf50', padding: '0.5rem 1rem' }}>
+                <div style={{ fontWeight: 800, fontSize: '1.2rem', background: '#111', color: '#4caf50', padding: '0.5rem 1rem', whiteSpace: 'nowrap' }}>
                   SCORE: {currentTimetable.totalScore}
                 </div>
               </div>

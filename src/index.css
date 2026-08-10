@@ -258,15 +258,113 @@ body.dark .timetable-wrapper {
   font-weight: 800;
 }
 
-/* Brutal Colors for assigned courses */
-.color-0 { background: #ff9800; }
-.color-1 { background: #4caf50; }
-.color-2 { background: #00bcd4; }
-.color-3 { background: #e91e63; color: white; }
-.color-4 { background: #9c27b0; color: white; }
-.color-5 { background: #8bc34a; }
-.color-6 { background: #03a9f4; }
-.color-7 { background: #ff5722; }
+  /* Force print background colors for courses */
+  .color-0 { background-color: #ff9800 !important; }
+  .color-1 { background-color: #4caf50 !important; }
+  .color-2 { background-color: #00bcd4 !important; }
+  .color-3 { background-color: #e91e63 !important; color: white !important; }
+  .color-4 { background-color: #9c27b0 !important; color: white !important; }
+  .color-5 { background-color: #8bc34a !important; }
+  .color-6 { background-color: #03a9f4 !important; }
+  .color-7 { background-color: #ff5722 !important; }
+}
+
+/* Base Layout Classes (App.jsx) */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 2rem;
+  max-width: 1800px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 4px solid #111;
+  padding-bottom: 1rem;
+}
+
+.app-title {
+  font-size: 4rem;
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+.app-subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: #111;
+  color: #ffeb3b;
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.header-links {
+  text-align: right;
+}
+
+.links-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.timetable-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .app-wrapper {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .app-title {
+    font-size: 3rem;
+  }
+
+  .app-subtitle {
+    font-size: 1rem;
+  }
+
+  .header-links {
+    text-align: left;
+    width: 100%;
+  }
+
+  .links-row {
+    justify-content: flex-start;
+  }
+
+  .brutal-button {
+    font-size: 0.8rem !important;
+    padding: 0.5rem 1rem !important;
+  }
+
+  .timetable-controls {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+}
 
 /* Scrollbar */
 ::-webkit-scrollbar {

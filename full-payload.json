@@ -1,0 +1,919 @@
+{
+  "student": {
+    "registration_number": "25BME0177",
+    "type": "STUDENT"
+  },
+  "campus": "VIT Vellore Campus",
+  "semester": "Fall Semester 2026-27",
+  "preferences": {
+    "theory": "morning"
+  },
+  "courses": [
+    {
+      "course_code": "BAGER101",
+      "course_name": "German Level I",
+      "allocations": [
+        {
+          "slot": ["TBB2"],
+          "venue": "SJT105",
+          "faculty": "DHANANJAY KUMAR",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L15", "L16"],
+          "venue": "TT116",
+          "faculty": "DHANANJAY KUMAR",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["TAA2"],
+          "venue": "SJT124",
+          "faculty": "ARATI KUMARI",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L15", "L16"],
+          "venue": "PRP555",
+          "faculty": "ARATI KUMARI",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L39", "L40"],
+          "venue": "PRP555",
+          "faculty": "ADAIKALAM ARULANANDAM",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["TCC1"],
+          "venue": "SJT114",
+          "faculty": "ADAIKALAM ARULANANDAM",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["TDD2"],
+          "venue": "SJT113",
+          "faculty": "ABHIJIT KR DARBEY",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L5", "L6"],
+          "venue": "PRP555",
+          "faculty": "ABHIJIT KR DARBEY",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["TCC1"],
+          "venue": "SJT113",
+          "faculty": "AMIT KUMAR SAINI",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["TAA1"],
+          "venue": "SJT201",
+          "faculty": "ADAIKALAM ARULANANDAM",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L55", "L56"],
+          "venue": "PRP555",
+          "faculty": "ADAIKALAM ARULANANDAM",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L41", "L42"],
+          "venue": "PRP555",
+          "faculty": "AMIT KUMAR SAINI",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["TE1"],
+          "venue": "SJT508",
+          "faculty": "AMIT KUMAR SAINI",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["TG2"],
+          "venue": "TT404",
+          "faculty": "DHANANJAY KUMAR",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L47", "L48"],
+          "venue": "PRP555",
+          "faculty": "AMIT KUMAR SAINI",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L21", "L22"],
+          "venue": "PRP555",
+          "faculty": "ARATI KUMARI",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L1", "L2"],
+          "venue": "PRP555",
+          "faculty": "DHANANJAY KUMAR",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["TBB2"],
+          "venue": "MB211",
+          "faculty": "ARATI KUMARI",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L35", "L36"],
+          "venue": "TT318",
+          "faculty": "ABHIJIT KR DARBEY",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["TCC1"],
+          "venue": "MB214",
+          "faculty": "ABHIJIT KR DARBEY",
+          "course_type": "ETH"
+        }
+      ]
+    },
+    {
+      "course_code": "BASTS101",
+      "course_name": "Qualitative and Quantitative Skills Practice I",
+      "allocations": [
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "SMV116",
+          "faculty": "TIME (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "SMV101",
+          "faculty": "TIME (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "TT201",
+          "faculty": "TIME (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "TT204",
+          "faculty": "TIME (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "PRP251",
+          "faculty": "SIXPHRASE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "SMV116",
+          "faculty": "TIME (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "SMV101",
+          "faculty": "TIME (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "CDMM403",
+          "faculty": "TIME (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "TT201",
+          "faculty": "TIME (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "TT204",
+          "faculty": "TIME (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "MB211",
+          "faculty": "ETHNUS (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "MB211",
+          "faculty": "ETHNUS (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "MB212",
+          "faculty": "FACE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "MB212",
+          "faculty": "FACE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "MB213",
+          "faculty": "SIXPHRASE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "MB214",
+          "faculty": "ETHNUS (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "CDMM403",
+          "faculty": "TIME (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "PRP251",
+          "faculty": "SIXPHRASE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "MB214",
+          "faculty": "ETHNUS (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "SJT215",
+          "faculty": "FACE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "PRP426",
+          "faculty": "SIXPHRASE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "PRP426",
+          "faculty": "SIXPHRASE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "PRP427",
+          "faculty": "ETHNUS (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "PRP427",
+          "faculty": "ETHNUS (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "PRP429",
+          "faculty": "FACE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "MB213",
+          "faculty": "SIXPHRASE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "SJT215",
+          "faculty": "FACE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "SJT222",
+          "faculty": "ETHNUS (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "SJT222",
+          "faculty": "ETHNUS (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "SJT223",
+          "faculty": "FACE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "SJT224",
+          "faculty": "SIXPHRASE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "SJT221",
+          "faculty": "SIXPHRASE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "SJT221",
+          "faculty": "SIXPHRASE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "SJT223",
+          "faculty": "FACE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "PRP424",
+          "faculty": "ETHNUS (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "PRP425",
+          "faculty": "FACE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "SJT224",
+          "faculty": "SIXPHRASE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "PRP429",
+          "faculty": "FACE (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E1", "TE1"],
+          "venue": "PRP424",
+          "faculty": "ETHNUS (APT)",
+          "course_type": "SS"
+        },
+        {
+          "slot": ["E2", "TE2"],
+          "venue": "PRP425",
+          "faculty": "FACE (APT)",
+          "course_type": "SS"
+        }
+      ]
+    },
+    {
+      "course_code": "BAMEE202",
+      "course_name": "Metallurgy and Mechanical Behaviour of Materials",
+      "allocations": [
+        {
+          "slot": ["L13", "L14"],
+          "venue": "GDN139",
+          "faculty": "PADMANABHAN K",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L41", "L42"],
+          "venue": "GDN139",
+          "faculty": "PADMANABHAN K",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["F1", "TF1"],
+          "venue": "MB211",
+          "faculty": "PADMANABHAN K",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["F2", "TF2"],
+          "venue": "MB212",
+          "faculty": "PADMANABHAN K",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["F1", "TF1"],
+          "venue": "MB214",
+          "faculty": "AHANKARI SANDEEP SURESHRAO",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L51", "L52"],
+          "venue": "GDN139",
+          "faculty": "PADMANABHAN K",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L21", "L22"],
+          "venue": "GDN139",
+          "faculty": "SREEKANTH M. S",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L23", "L24"],
+          "venue": "GDN139",
+          "faculty": "SREEKANTH M. S",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["F1", "TF1"],
+          "venue": "MB212",
+          "faculty": "SK ARIFUL RAHAMAN",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["F1", "TF1"],
+          "venue": "MB213",
+          "faculty": "SREEKANTH M. S",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["F2", "TF2"],
+          "venue": "MB213",
+          "faculty": "SREEKANTH M. S",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["F2", "TF2"],
+          "venue": "MB214",
+          "faculty": "AHANKARI SANDEEP SURESHRAO",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L5", "L6"],
+          "venue": "GDN139",
+          "faculty": "PADMANABHAN K",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L11", "L12"],
+          "venue": "GDN139",
+          "faculty": "SK ARIFUL RAHAMAN",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L39", "L40"],
+          "venue": "GDN139",
+          "faculty": "SK ARIFUL RAHAMAN",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["F2", "TF2"],
+          "venue": "MB211",
+          "faculty": "SK ARIFUL RAHAMAN",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L25", "L26"],
+          "venue": "GDN139",
+          "faculty": "SK ARIFUL RAHAMAN",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L35", "L36"],
+          "venue": "GDN139",
+          "faculty": "SK ARIFUL RAHAMAN",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L47", "L48"],
+          "venue": "GDN139",
+          "faculty": "SREEKANTH M. S",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L55", "L56"],
+          "venue": "GDN139",
+          "faculty": "SREEKANTH M. S",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["F2", "TF2"],
+          "venue": "MB218",
+          "faculty": "SASIKUMAR R",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L7", "L8"],
+          "venue": "GDN139",
+          "faculty": "AHANKARI SANDEEP SURESHRAO",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["F1", "TF1"],
+          "venue": "MB218",
+          "faculty": "KARRI SANTHOSH KUMAR",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L3", "L4"],
+          "venue": "GDN139",
+          "faculty": "SASIKUMAR R",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L15", "L16"],
+          "venue": "GDN139",
+          "faculty": "SASIKUMAR R",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L45", "L46"],
+          "venue": "GDN139",
+          "faculty": "KARRI SANTHOSH KUMAR",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L57", "L58"],
+          "venue": "GDN139",
+          "faculty": "KARRI SANTHOSH KUMAR",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L9", "L10"],
+          "venue": "GDN139",
+          "faculty": "AHANKARI SANDEEP SURESHRAO",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L37", "L38"],
+          "venue": "GDN139",
+          "faculty": "AHANKARI SANDEEP SURESHRAO",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L43", "L44"],
+          "venue": "GDN139",
+          "faculty": "AHANKARI SANDEEP SURESHRAO",
+          "course_type": "ELA"
+        }
+      ]
+    },
+    {
+      "course_code": "BAMEE204",
+      "course_name": "Fluid Mechanics and Machinery",
+      "allocations": [
+        {
+          "slot": ["L39", "L40"],
+          "venue": "GDN25A",
+          "faculty": "JAYAPRAKASH NARAYAN M",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L9", "L10"],
+          "venue": "GDN25A",
+          "faculty": "DEEPAKKUMAR R",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L29", "L30"],
+          "venue": "GDN25A",
+          "faculty": "DEEPAKKUMAR R",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["D1", "TD1"],
+          "venue": "MB226",
+          "faculty": "ANUJ KUMAR",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["D2", "TD2"],
+          "venue": "MB224",
+          "faculty": "DEEPAKKUMAR R",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L19", "L20"],
+          "venue": "GDN25A",
+          "faculty": "PRAKASH R",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["D2", "TD2"],
+          "venue": "GDN106",
+          "faculty": "PRAKASH R",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L37", "L38"],
+          "venue": "GDN25A",
+          "faculty": "ANUJ KUMAR",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["D1", "TD1"],
+          "venue": "MB224",
+          "faculty": "SREEJA SADASIVAN",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["D1", "TD1"],
+          "venue": "GDN106",
+          "faculty": "MOHAN C.G",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L49", "L50"],
+          "venue": "GDN25A",
+          "faculty": "SREEJA SADASIVAN",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L13", "L14"],
+          "venue": "GDN25A",
+          "faculty": "ARUNA KUMAR BEHURA",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L27", "L28"],
+          "venue": "GDN25A",
+          "faculty": "ARUNA KUMAR BEHURA",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L55", "L56"],
+          "venue": "GDN25A",
+          "faculty": "JAYAPRAKASH NARAYAN M",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["D2", "TD2"],
+          "venue": "GDN107",
+          "faculty": "ARUNA KUMAR BEHURA",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["D1", "TD1"],
+          "venue": "MB225",
+          "faculty": "JAYAPRAKASH NARAYAN M",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L33", "L34"],
+          "venue": "GDN25A",
+          "faculty": "SREEJA SADASIVAN",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L57", "L58"],
+          "venue": "GDN25A",
+          "faculty": "ANUJ KUMAR",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["D2", "TD2"],
+          "venue": "MB213",
+          "faculty": "RAJESH KANNA",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L7", "L8"],
+          "venue": "GDN25A",
+          "faculty": "RAJESH KANNA",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L21", "L22"],
+          "venue": "GDN25A",
+          "faculty": "RAJESH KANNA",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L31", "L32"],
+          "venue": "GDN25A",
+          "faculty": "MOHAMED IBRAHIM M",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L51", "L52"],
+          "venue": "GDN25A",
+          "faculty": "MOHAMED IBRAHIM M",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["D1", "TD1"],
+          "venue": "MB214",
+          "faculty": "MOHAMED IBRAHIM M",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L5", "L6"],
+          "venue": "GDN25A",
+          "faculty": "PRAKASH R",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L15", "L16"],
+          "venue": "GDN25A",
+          "faculty": "GAURAV GUPTA",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["D2", "TD2"],
+          "venue": "GDN121",
+          "faculty": "GAURAV GUPTA",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L3", "L4"],
+          "venue": "GDN25A",
+          "faculty": "GAURAV GUPTA",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L35", "L36"],
+          "venue": "GDN25A",
+          "faculty": "MOHAN C.G",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L45", "L46"],
+          "venue": "GDN25A",
+          "faculty": "MOHAN C.G",
+          "course_type": "ELA"
+        }
+      ]
+    },
+    {
+      "course_code": "BAMEE305",
+      "course_name": "Precision Engineering and Metrology",
+      "allocations": [
+        {
+          "slot": ["B2", "TB2"],
+          "venue": "MB227",
+          "faculty": "KAPIL MANOHARAN",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["B2", "TB2"],
+          "venue": "GDN121",
+          "faculty": "MURALIDHARAN B",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L21", "L22"],
+          "venue": "GDN138",
+          "faculty": "KAPIL MANOHARAN",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["B1", "TB1"],
+          "venue": "GDN120",
+          "faculty": "MURALIDHARAN B",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["B1", "TB1"],
+          "venue": "MB227",
+          "faculty": "RATNESH RAJ",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L9", "L10"],
+          "venue": "GDN138",
+          "faculty": "MURALIDHARAN B",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L23", "L24"],
+          "venue": "GDN138",
+          "faculty": "MURALIDHARAN B",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L31", "L32"],
+          "venue": "GDN138",
+          "faculty": "MURALIDHARAN B",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L33", "L34"],
+          "venue": "GDN138",
+          "faculty": "RATNESH RAJ",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L27", "L28"],
+          "venue": "GDN138",
+          "faculty": "SUYA PREM ANAND P",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["B1", "TB1"],
+          "venue": "GDN121",
+          "faculty": "SUYA PREM ANAND P",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["B2", "TB2"],
+          "venue": "GDN122",
+          "faculty": "SUYA PREM ANAND P",
+          "course_type": "ETH"
+        },
+        {
+          "slot": ["L7", "L8"],
+          "venue": "GDN138",
+          "faculty": "KAPIL MANOHARAN",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L51", "L52"],
+          "venue": "GDN138",
+          "faculty": "MURALIDHARAN B",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L41", "L42"],
+          "venue": "GDN138",
+          "faculty": "SUYA PREM ANAND P",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L55", "L56"],
+          "venue": "GDN138",
+          "faculty": "SUYA PREM ANAND P",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L39", "L40"],
+          "venue": "GDN138",
+          "faculty": "RATNESH RAJ",
+          "course_type": "ELA"
+        },
+        {
+          "slot": ["L11", "L12"],
+          "venue": "GDN138",
+          "faculty": "SUYA PREM ANAND P",
+          "course_type": "ELA"
+        }
+      ]
+    },
+    {
+      "course_code": "BAMEE401",
+      "course_name": "Production and Operations Management",
+      "allocations": [
+        {
+          "slot": ["C2", "TC2", "TCC2"],
+          "venue": "MB225",
+          "faculty": "SAMPATH KUMAR T",
+          "course_type": "TH"
+        },
+        {
+          "slot": ["C1", "TC1", "TCC1"],
+          "venue": "MB226",
+          "faculty": "JOEL J",
+          "course_type": "TH"
+        },
+        {
+          "slot": ["C2", "TC2", "TCC2"],
+          "venue": "MB227",
+          "faculty": "JAYAKRISHNA K",
+          "course_type": "TH"
+        },
+        {
+          "slot": ["C1", "TC1", "TCC1"],
+          "venue": "MB225",
+          "faculty": "RAMANUJAM R",
+          "course_type": "TH"
+        },
+        {
+          "slot": ["C2", "TC2", "TCC2"],
+          "venue": "MB226",
+          "faculty": "JOEL J",
+          "course_type": "TH"
+        },
+        {
+          "slot": ["C1", "TC1", "TCC1"],
+          "venue": "GDNG07",
+          "faculty": "RAJYALAKSHMI G",
+          "course_type": "TH"
+        },
+        {
+          "slot": ["A2", "TA2", "TAA2"],
+          "venue": "CDMM404",
+          "faculty": "ARAVIND RAJ S",
+          "course_type": "TH"
+        }
+      ]
+    }
+  ]
+}

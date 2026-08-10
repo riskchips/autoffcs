@@ -1,0 +1,639 @@
+{
+  "schedule": {
+    "days": ["MON", "TUE", "WED", "THU", "FRI"],
+
+    "theory_slots": [
+      {
+        "slot": 1,
+        "time": "08:00 AM - 08:50 AM",
+        "period": "morning"
+      },
+      {
+        "slot": 2,
+        "time": "09:00 AM - 09:50 AM",
+        "period": "morning"
+      },
+      {
+        "slot": 3,
+        "time": "10:00 AM - 10:50 AM",
+        "period": "morning"
+      },
+      {
+        "slot": 4,
+        "time": "11:00 AM - 11:50 AM",
+        "period": "morning"
+      },
+      {
+        "slot": 5,
+        "time": "12:00 PM - 12:50 PM",
+        "period": "morning"
+      },
+      {
+        "slot": 6,
+        "time": "02:00 PM - 02:50 PM",
+        "period": "evening"
+      },
+      {
+        "slot": 7,
+        "time": "03:00 PM - 03:50 PM",
+        "period": "evening"
+      },
+      {
+        "slot": 8,
+        "time": "04:00 PM - 04:50 PM",
+        "period": "evening"
+      },
+      {
+        "slot": 9,
+        "time": "05:00 PM - 05:50 PM",
+        "period": "evening"
+      },
+      {
+        "slot": 10,
+        "time": "06:00 PM - 06:50 PM",
+        "period": "evening"
+      },
+      {
+        "slot": 11,
+        "time": "06:51 PM - 07:00 PM",
+        "period": "evening"
+      },
+      {
+        "slot": 12,
+        "time": "07:01 PM - 07:50 PM",
+        "period": "evening"
+      }
+    ],
+
+    "lab_slots": [
+      {
+        "slot": 1,
+        "time": "08:00 AM - 08:50 AM",
+        "period": "morning"
+      },
+      {
+        "slot": 2,
+        "time": "08:51 AM - 09:40 AM",
+        "period": "morning"
+      },
+      {
+        "slot": 3,
+        "time": "09:51 AM - 10:40 AM",
+        "period": "morning"
+      },
+      {
+        "slot": 4,
+        "time": "10:41 AM - 11:30 AM",
+        "period": "morning"
+      },
+      {
+        "slot": 5,
+        "time": "11:40 AM - 12:30 PM",
+        "period": "morning"
+      },
+      {
+        "slot": 6,
+        "time": "12:31 PM - 01:20 PM",
+        "period": "morning"
+      },
+      {
+        "slot": 7,
+        "time": "02:00 PM - 02:50 PM",
+        "period": "evening"
+      },
+      {
+        "slot": 8,
+        "time": "02:51 PM - 03:40 PM",
+        "period": "evening"
+      },
+      {
+        "slot": 9,
+        "time": "03:51 PM - 04:40 PM",
+        "period": "evening"
+      },
+      {
+        "slot": 10,
+        "time": "04:41 PM - 05:30 PM",
+        "period": "evening"
+      },
+      {
+        "slot": 11,
+        "time": "05:40 PM - 06:30 PM",
+        "period": "evening"
+      },
+      {
+        "slot": 12,
+        "time": "06:31 PM - 07:20 PM",
+        "period": "evening"
+      }
+    ],
+
+    "lunch": {
+      "time": "01:20 PM - 02:00 PM"
+    },
+
+    "days_schedule": {
+      "MON": [
+        {
+          "slot": 1,
+          "theory_time": "08:00 AM - 08:50 AM",
+          "lab_time": "08:00 AM - 08:50 AM",
+          "theory": "A1",
+          "lab": "L1",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 2,
+          "theory_time": "09:00 AM - 09:50 AM",
+          "lab_time": "08:51 AM - 09:40 AM",
+          "theory": "F1",
+          "lab": "L2",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 3,
+          "theory_time": "10:00 AM - 10:50 AM",
+          "lab_time": "09:51 AM - 10:40 AM",
+          "theory": "D1",
+          "lab": "L3",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 4,
+          "theory_time": "11:00 AM - 11:50 AM",
+          "lab_time": "10:41 AM - 11:30 AM",
+          "theory": "TB1",
+          "lab": "L4",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 5,
+          "theory_time": "12:00 PM - 12:50 PM",
+          "lab_time": "11:40 AM - 12:30 PM",
+          "theory": "TG1",
+          "lab": "L5",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 6,
+          "theory_time": null,
+          "lab_time": "12:31 PM - 01:20 PM",
+          "theory": null,
+          "lab": "L6",
+          "theory_period": null,
+          "lab_period": "morning"
+        },
+        {
+          "slot": 7,
+          "theory_time": "02:00 PM - 02:50 PM",
+          "lab_time": "02:00 PM - 02:50 PM",
+          "theory": "A2",
+          "lab": "L31",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 8,
+          "theory_time": "03:00 PM - 03:50 PM",
+          "lab_time": "02:51 PM - 03:40 PM",
+          "theory": "F2",
+          "lab": "L32",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 9,
+          "theory_time": "04:00 PM - 04:50 PM",
+          "lab_time": "03:51 PM - 04:40 PM",
+          "theory": "D2",
+          "lab": "L33",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 10,
+          "theory_time": "05:00 PM - 05:50 PM",
+          "lab_time": "04:41 PM - 05:30 PM",
+          "theory": "TB2",
+          "lab": "L34",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 11,
+          "theory_time": "06:00 PM - 06:50 PM",
+          "lab_time": "05:40 PM - 06:30 PM",
+          "theory": "TG2",
+          "lab": "L35",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 12,
+          "theory_time": "06:51 PM - 07:00 PM",
+          "lab_time": "06:31 PM - 07:20 PM",
+          "theory": null,
+          "lab": "L36",
+          "special": null,
+          "theory_period": null,
+          "lab_period": "evening"
+        },
+        {
+          "slot": 13,
+          "theory_time": "07:01 PM - 07:50 PM",
+          "lab_time": null,
+          "theory": null,
+          "lab": null,
+          "special": "V3",
+          "theory_period": null,
+          "lab_period": null
+        }
+      ],
+
+      "TUE": [
+        {
+          "slot": 1,
+          "theory": "B1",
+          "lab": "L7",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 2,
+          "theory": "G1",
+          "lab": "L8",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 3,
+          "theory": "E1",
+          "lab": "L9",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 4,
+          "theory": "TC1",
+          "lab": "L10",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 5,
+          "theory": "TAA1",
+          "lab": "L11",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 6,
+          "theory": null,
+          "lab": "L12",
+          "theory_period": null,
+          "lab_period": "morning"
+        },
+        {
+          "slot": 7,
+          "theory": "B2",
+          "lab": "L37",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 8,
+          "theory": "G2",
+          "lab": "L38",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 9,
+          "theory": "E2",
+          "lab": "L39",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 10,
+          "theory": "TC2",
+          "lab": "L40",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 11,
+          "theory": "TAA2",
+          "lab": "L41",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 12,
+          "theory": null,
+          "lab": "L42",
+          "theory_period": null,
+          "lab_period": "evening"
+        },
+        {
+          "slot": 13,
+          "theory": null,
+          "lab": null,
+          "special": "V4",
+          "theory_period": null,
+          "lab_period": null
+        }
+      ],
+
+      "WED": [
+        {
+          "slot": 1,
+          "theory": "C1",
+          "lab": "L13",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 2,
+          "theory": "A1",
+          "lab": "L14",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 3,
+          "theory": "F1",
+          "lab": "L15",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 4,
+          "theory": "V1",
+          "lab": "L16",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 5,
+          "theory": "V2",
+          "lab": "L17",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 6,
+          "theory": null,
+          "lab": "L18",
+          "theory_period": null,
+          "lab_period": "morning"
+        },
+        {
+          "slot": 7,
+          "theory": "C2",
+          "lab": "L43",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 8,
+          "theory": "A2",
+          "lab": "L44",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 9,
+          "theory": "F2",
+          "lab": "L45",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 10,
+          "theory": "TD2",
+          "lab": "L46",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 11,
+          "theory": "TBB2",
+          "lab": "L47",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 12,
+          "theory": null,
+          "lab": "L48",
+          "theory_period": null,
+          "lab_period": "evening"
+        },
+        {
+          "slot": 13,
+          "theory": null,
+          "lab": null,
+          "special": "V5",
+          "theory_period": null,
+          "lab_period": null
+        }
+      ],
+
+      "THU": [
+        {
+          "slot": 1,
+          "theory": "D1",
+          "lab": "L19",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 2,
+          "theory": "B1",
+          "lab": "L20",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 3,
+          "theory": "G1",
+          "lab": "L21",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 4,
+          "theory": "TE1",
+          "lab": "L22",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 5,
+          "theory": "TCC1",
+          "lab": "L23",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 6,
+          "theory": null,
+          "lab": "L24",
+          "theory_period": null,
+          "lab_period": "morning"
+        },
+        {
+          "slot": 7,
+          "theory": "D2",
+          "lab": "L49",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 8,
+          "theory": "B2",
+          "lab": "L50",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 9,
+          "theory": "G2",
+          "lab": "L51",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 10,
+          "theory": "TE2",
+          "lab": "L52",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 11,
+          "theory": "TCC2",
+          "lab": "L53",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 12,
+          "theory": null,
+          "lab": "L54",
+          "theory_period": null,
+          "lab_period": "evening"
+        },
+        {
+          "slot": 13,
+          "theory": null,
+          "lab": null,
+          "special": "V6",
+          "theory_period": null,
+          "lab_period": null
+        }
+      ],
+
+      "FRI": [
+        {
+          "slot": 1,
+          "theory": "E1",
+          "lab": "L25",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 2,
+          "theory": "C1",
+          "lab": "L26",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 3,
+          "theory": "TA1",
+          "lab": "L27",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 4,
+          "theory": "TF1",
+          "lab": "L28",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 5,
+          "theory": "TD1",
+          "lab": "L29",
+          "theory_period": "morning",
+          "lab_period": "morning"
+        },
+        {
+          "slot": 6,
+          "theory": null,
+          "lab": "L30",
+          "theory_period": null,
+          "lab_period": "morning"
+        },
+        {
+          "slot": 7,
+          "theory": "E2",
+          "lab": "L55",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 8,
+          "theory": "C2",
+          "lab": "L56",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 9,
+          "theory": "TA2",
+          "lab": "L57",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 10,
+          "theory": "TF2",
+          "lab": "L58",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 11,
+          "theory": "TDD2",
+          "lab": "L59",
+          "theory_period": "evening",
+          "lab_period": "evening"
+        },
+        {
+          "slot": 12,
+          "theory": null,
+          "lab": "L60",
+          "theory_period": null,
+          "lab_period": "evening"
+        },
+        {
+          "slot": 13,
+          "theory": null,
+          "lab": null,
+          "special": "V7",
+          "theory_period": null,
+          "lab_period": null
+        }
+      ]
+    }
+  }
+}

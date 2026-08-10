@@ -1,0 +1,29 @@
+AUTO FFCS TIMETABLE GENERATION RESULTS
+======================================
+
+Total Timetables Found: 20
+
+--- BEST TIMETABLE (Option 1) ---
+
+Course: BAGER101 - German Level I (Faculty Match: ADAIKALAM ARULANANDAM)
+  Type: ETH | Slot: TAA1 | Venue: SJT201 | Faculty: ADAIKALAM ARULANANDAM
+  Type: ELA | Slot: L39, L40 | Venue: PRP555 | Faculty: ADAIKALAM ARULANANDAM
+
+Course: BASTS101 - Qualitative and Quantitative Skills Practice I (Faculty Match: TIME (APT))
+  Type: SS | Slot: E1, TE1 | Venue: SMV116 | Faculty: TIME (APT)
+
+Course: BAMEE202 - Metallurgy and Mechanical Behaviour of Materials (Faculty Match: PADMANABHAN K)
+  Type: ELA | Slot: L41, L42 | Venue: GDN139 | Faculty: PADMANABHAN K
+  Type: ETH | Slot: F1, TF1 | Venue: MB211 | Faculty: PADMANABHAN K
+
+Course: BAMEE204 - Fluid Mechanics and Machinery (Faculty Match: JAYAPRAKASH NARAYAN M)
+  Type: ELA | Slot: L55, L56 | Venue: GDN25A | Faculty: JAYAPRAKASH NARAYAN M
+  Type: ETH | Slot: D1, TD1 | Venue: MB225 | Faculty: JAYAPRAKASH NARAYAN M
+
+Course: BAMEE305 - Precision Engineering and Metrology (Faculty Match: MURALIDHARAN B)
+  Type: ETH | Slot: B1, TB1 | Venue: GDN120 | Faculty: MURALIDHARAN B
+  Type: ELA | Slot: L31, L32 | Venue: GDN138 | Faculty: MURALIDHARAN B
+
+Course: BAMEE401 - Production and Operations Management (Faculty Match: JOEL J)
+  Type: TH | Slot: C1, TC1, TCC1 | Venue: MB226 | Faculty: JOEL J
+

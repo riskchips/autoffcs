@@ -26,6 +26,12 @@ body {
   min-height: 100vh;
 }
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
 #root {
   display: flex;
   flex-direction: column;
@@ -276,8 +282,10 @@ body.dark .timetable-wrapper {
   min-height: 100vh;
   padding: 2rem;
   max-width: 1800px;
+  width: 100%;
   margin: 0 auto;
   gap: 2rem;
+  overflow-x: hidden;
 }
 
 .app-header {

@@ -178,7 +178,7 @@ function App() {
       <main className="layout-grid">
         
         {/* SIDEBAR */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <div className="sidebar-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           <div className="brutal-box">
             <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Settings /> CONFIG

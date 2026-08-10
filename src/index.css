@@ -168,14 +168,14 @@ body.dark .slot-filled .slot-name {
 /* Responsive fixes for Zoom Error */
 .layout-grid {
   display: grid;
-  grid-template-columns: 350px 1fr;
+  grid-template-columns: 350px minmax(0, 1fr);
   gap: 2rem;
   align-items: start;
 }
 
 @media (max-width: 1200px) {
   .layout-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

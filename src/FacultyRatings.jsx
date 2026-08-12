@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useDeferredValue, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Star, Building2 } from 'lucide-react';
+import { Search, Star, Building2, X } from 'lucide-react';
 import vitFacultyData from '../vit-faculty.json';
 import { getFacultyScore } from '../data/facultyRatings';
 
@@ -82,7 +82,9 @@ const FacultyRatings = () => {
   };
 
   const filteredData = useMemo(() => {
-    if (!deferredSearchTerm.trim()) return vitFacultyData;
+    if (!deferredSearchTerm.trim()) {
+      return vitFacultyData.filter(school => school.faculty && school.faculty.length > 0);
+    }
     
     const term = deferredSearchTerm.toLowerCase();
     
@@ -125,7 +127,7 @@ const FacultyRatings = () => {
   return (
     <div className="faculty-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem', width: '100%' }}>
       <div className="brutal-box" style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, minWidth: '250px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, minWidth: '250px', position: 'relative' }}>
           <Search size={24} />
           <input 
             type="text" 
@@ -133,8 +135,17 @@ const FacultyRatings = () => {
             placeholder="SEARCH BY NAME OR ID..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ width: '100%', fontSize: '1.2rem', padding: '0.8rem' }}
+            style={{ width: '100%', fontSize: '1.2rem', padding: '0.8rem', paddingRight: '3rem' }}
           />
+          {searchTerm && (
+            <button 
+              onClick={() => setSearchTerm('')} 
+              style={{ position: 'absolute', right: '0.5rem', background: 'transparent', border: 'none', cursor: 'pointer', color: '#111', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              title="Clear Search"
+            >
+              <X size={24} />
+            </button>
+          )}
         </div>
         {searchTerm !== deferredSearchTerm && (
           <span style={{ fontWeight: 700, color: '#ff9800', whiteSpace: 'nowrap' }}>SEARCHING...</span>

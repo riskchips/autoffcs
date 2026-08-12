@@ -421,32 +421,38 @@ function App() {
                 </div>
               </div>
 
-              <div className="timetable-wrapper" style={{ padding: isDownloading ? '0' : '0' }}>
-                <div 
-                  id="capture-area" 
-                  style={{ 
-                    position: 'relative', 
-                    width: 'max-content', 
-                    padding: isDownloading ? '2rem' : '1rem', 
-                    background: isDarkMode ? (isDownloading ? '#111' : '#222') : (isDownloading ? '#fff' : '#fff'),
-                    border: isDownloading ? '6px solid #111' : 'none',
-                    boxShadow: isDownloading ? (isDarkMode ? '12px 12px 0px #fff' : '12px 12px 0px #111') : 'none',
-                    margin: '0 auto'
-                  }}
-                >
-                  
-                  {isDownloading && (
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: '6px solid #111', paddingBottom: '1rem', marginBottom: '2rem' }}>
-                      <div>
-                        <h2 style={{ fontSize: '3rem', fontWeight: 900, margin: 0, lineHeight: 1, letterSpacing: '-2px' }}>AUTOFFCS</h2>
-                        <span style={{ background: '#ffeb3b', color: '#111', fontWeight: 900, padding: '0.2rem 0.5rem', border: '2px solid #111' }}>
-                          SMART TIMETABLE
-                        </span>
-                      </div>
-                    </div>
-                  )}
+              {/* Define dynamic colors for brutalist elements */}
+              {(() => {
+                const brutalBorder = isDarkMode ? '#fff' : '#111';
+                const brutalBg = isDarkMode ? '#111' : '#fff';
+                
+                return (
+                  <div className="timetable-wrapper" style={{ padding: isDownloading ? '0' : '0' }}>
+                    <div 
+                      id="capture-area" 
+                      style={{ 
+                        position: 'relative', 
+                        width: 'max-content', 
+                        padding: isDownloading ? '2rem' : '1rem', 
+                        background: isDarkMode ? (isDownloading ? '#111' : '#222') : (isDownloading ? '#fff' : '#fff'),
+                        border: isDownloading ? `6px solid ${brutalBorder}` : 'none',
+                        boxShadow: isDownloading ? `12px 12px 0px ${brutalBorder}` : 'none',
+                        margin: '0 auto'
+                      }}
+                    >
+                      
+                      {isDownloading && (
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: `6px solid ${brutalBorder}`, paddingBottom: '1rem', marginBottom: '2rem' }}>
+                          <div>
+                            <h2 style={{ fontSize: '3rem', fontWeight: 900, margin: 0, lineHeight: 1, letterSpacing: '-2px', color: isDarkMode ? '#fff' : '#111' }}>AUTOFFCS</h2>
+                            <span style={{ background: '#ffeb3b', color: '#111', fontWeight: 900, padding: '0.2rem 0.5rem', border: `2px solid ${brutalBorder}` }}>
+                              SMART TIMETABLE
+                            </span>
+                          </div>
+                        </div>
+                      )}
 
-                  <table className="timetable">
+                      <table className="timetable">
                   <tr className="theory-header">
                     <th>THEORY (ETH)<br/>HOURS</th>
                     <th>8:00 AM<br/>to<br/>8:50 AM</th>
@@ -563,29 +569,31 @@ function App() {
                 </table>
                 
                   {/* Brutalist Watermark Footer */}
-                  {isDownloading && (
-                    <div style={{ 
-                      marginTop: '2rem', 
-                      background: '#ff5722', 
-                      color: '#111', 
-                      border: '4px solid #111', 
-                      boxShadow: '6px 6px 0px #111',
-                      padding: '1.5rem',
-                      textAlign: 'center',
-                      fontWeight: 900,
-                      fontSize: '1.8rem',
-                      letterSpacing: '6px',
-                      textTransform: 'uppercase',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      GENERATED ON AUTOFFCS.ARNABDEV.SPACE 
-                    </div>
-                  )}
+                      {isDownloading && (
+                        <div style={{ 
+                          marginTop: '2rem', 
+                          background: '#ff5722', 
+                          color: '#111', 
+                          border: `4px solid ${brutalBorder}`, 
+                          boxShadow: `6px 6px 0px ${brutalBorder}`,
+                          padding: '1.5rem',
+                          textAlign: 'center',
+                          fontWeight: 900,
+                          fontSize: '1.8rem',
+                          letterSpacing: '6px',
+                          textTransform: 'uppercase',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          GENERATED ON AUTOFFCS.ARNABDEV.SPACE 
+                        </div>
+                      )}
 
-                </div>
-              </div>
+                    </div>
+                  </div>
+                );
+              })}
             </>
           ) : (
             <div className="brutal-box" style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', background: '#eee' }}>

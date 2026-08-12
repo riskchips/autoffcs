@@ -125,6 +125,10 @@ function App() {
   const handleCellClick = (data) => {
     if (!data.isFilled) return;
     try {
+      if (!rawData || rawData.trim() === '') {
+        setStatus({ text: 'You must have the original VTOP data pasted in the config to swap faculty!', type: 'error' });
+        return;
+      }
       const payload = parseFFCSText(rawData);
       const rawCourse = payload.courses.find(c => c.course_code === data.courseCode);
       
@@ -137,9 +141,12 @@ function App() {
           bundles: bundles,
           currentSlotsSig: currentTimetable.courses.find(c => c.course_code === data.courseCode)?.allocations.map(a => a.slot.join('+')).sort().join('|')
         });
+      } else {
+        setStatus({ text: 'Course not found in raw data. Paste the original data to swap.', type: 'error' });
       }
     } catch (e) {
       console.error(e);
+      setStatus({ text: 'Error swapping faculty. Need original VTOP data.', type: 'error' });
     }
   };
 
@@ -196,12 +203,7 @@ function App() {
   };
 
   const handleExportJson = () => {
-    const exportData = {
-      version: '1.0',
-      rawData: rawData,
-      timetable: currentTimetable
-    };
-    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(currentTimetable, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.download = 'autoffcs-timetable.json';
@@ -218,9 +220,8 @@ function App() {
     reader.onload = (event) => {
       try {
         const parsed = JSON.parse(event.target.result);
-        if (parsed.timetable && parsed.rawData !== undefined) {
-          setRawData(parsed.rawData);
-          setTimetables([parsed.timetable]);
+        if (parsed && parsed.courses) {
+          setTimetables([parsed]);
           setCurrentIndex(0);
           setStatus({ text: 'Timetable imported successfully!', type: 'success' });
         } else {

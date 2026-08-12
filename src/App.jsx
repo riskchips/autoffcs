@@ -195,6 +195,46 @@ function App() {
     }, 150);
   };
 
+  const handleExportJson = () => {
+    const exportData = {
+      version: '1.0',
+      rawData: rawData,
+      timetable: currentTimetable
+    };
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = 'autoffcs-timetable.json';
+    link.href = url;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportJson = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const parsed = JSON.parse(event.target.result);
+        if (parsed.timetable && parsed.rawData !== undefined) {
+          setRawData(parsed.rawData);
+          setTimetables([parsed.timetable]);
+          setCurrentIndex(0);
+          setStatus({ text: 'Timetable imported successfully!', type: 'success' });
+        } else {
+          throw new Error("Invalid format");
+        }
+      } catch (err) {
+        console.error(err);
+        setStatus({ text: 'Invalid JSON file.', type: 'error' });
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = null; // reset input
+  };
+
   const renderCell = (slots) => {
     const data = getCellData(slots);
     
@@ -300,7 +340,7 @@ function App() {
 
             <motion.button 
               className="brutal-button" 
-              style={{ width: '100%' }}
+              style={{ width: '100%', marginBottom: '1rem' }}
               onClick={handleGenerate}
               disabled={isLoading}
               whileHover={{ scale: 1.02 }}
@@ -308,6 +348,23 @@ function App() {
             >
               <Play fill="currentColor" /> {isLoading ? 'GENERATING...' : 'GENERATE'}
             </motion.button>
+            
+            <div style={{ textAlign: 'center', marginBottom: '1rem', fontWeight: 900 }}>OR</div>
+            
+            <input 
+              type="file" 
+              accept=".json" 
+              id="import-json" 
+              style={{ display: 'none' }} 
+              onChange={handleImportJson} 
+            />
+            <label 
+              htmlFor="import-json" 
+              className="brutal-button" 
+              style={{ width: '100%', display: 'block', textAlign: 'center', background: '#e91e63', color: '#fff' }}
+            >
+              IMPORT TIMETABLE JSON
+            </label>
           </div>
 
           {status.text && (
@@ -338,14 +395,24 @@ function App() {
                 <div style={{ fontWeight: 800, fontSize: '1.2rem', background: '#111', color: '#4caf50', padding: '0.5rem 1rem', whiteSpace: 'nowrap' }}>
                   SCORE: {currentTimetable.totalScore}
                 </div>
-                <button 
-                  className="brutal-button" 
-                  onClick={handleDownload}
-                  style={{ background: '#2196f3', color: '#fff', marginLeft: 'auto' }}
-                  title="Download Timetable as Image"
-                >
-                  <Download size={20} /> <span className="hide-mobile">DOWNLOAD</span>
-                </button>
+                <div style={{ marginLeft: 'auto', display: 'flex', gap: '0.5rem' }}>
+                  <button 
+                    className="brutal-button" 
+                    onClick={handleExportJson}
+                    style={{ background: '#e91e63', color: '#fff' }}
+                    title="Export Timetable as JSON"
+                  >
+                    EXPORT JSON
+                  </button>
+                  <button 
+                    className="brutal-button" 
+                    onClick={handleDownload}
+                    style={{ background: '#2196f3', color: '#fff' }}
+                    title="Download Timetable as Image"
+                  >
+                    <Download size={20} /> <span className="hide-mobile">IMAGE</span>
+                  </button>
+                </div>
               </div>
 
               <div className="timetable-wrapper" style={{ padding: isDownloading ? '0' : '0' }}>
@@ -362,7 +429,6 @@ function App() {
                   }}
                 >
                   
-                  {/* Internal header for the exported image */}
                   {isDownloading && (
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: '6px solid #111', paddingBottom: '1rem', marginBottom: '2rem' }}>
                       <div>
@@ -370,9 +436,6 @@ function App() {
                         <span style={{ background: '#ffeb3b', color: '#111', fontWeight: 900, padding: '0.2rem 0.5rem', border: '2px solid #111' }}>
                           SMART TIMETABLE
                         </span>
-                      </div>
-                      <div style={{ background: '#111', color: '#4caf50', fontWeight: 900, fontSize: '1.5rem', padding: '0.5rem 1rem', border: '4px solid #111', boxShadow: '4px 4px 0px #ffeb3b' }}>
-                        SCORE: {currentTimetable.totalScore}
                       </div>
                     </div>
                   )}
@@ -509,12 +572,9 @@ function App() {
                       textTransform: 'uppercase',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '1rem'
+                      justifyContent: 'center'
                     }}>
-                      <span>⚡</span> 
                       GENERATED ON AUTOFFCS.ARNABDEV.SPACE 
-                      <span>⚡</span>
                     </div>
                   )}
 

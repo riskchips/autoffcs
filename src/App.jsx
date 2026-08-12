@@ -278,9 +278,14 @@ function App() {
       <header className="app-header">
         <div>
           <h1 className="app-title">AUTOFFCS</h1>
-          <p className="app-subtitle">
-            TIMETABLE GENERATOR
-          </p>
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+            <span className="app-subtitle" style={{ marginTop: 0 }}>
+              TIMETABLE GENERATOR
+            </span>
+            <span className="app-subtitle" style={{ marginTop: 0, background: '#e91e63' }}>
+              TRAINED OVER VARIOUS FACULTIES REVIEWS
+            </span>
+          </div>
         </div>
         <div className="header-links">
           <p style={{ fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.5rem' }}>MADE BY ARNAB</p>

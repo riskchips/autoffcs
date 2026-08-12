@@ -148,6 +148,15 @@ body.dark .lunch-col {
   border-right: 4px solid #f4f4f0 !important;
 }
 
+body.dark .app-header {
+  border-bottom-color: #f4f4f0;
+}
+
+body.dark .app-subtitle {
+  color: #111;
+  background: #f4f4f0;
+}
+
 body.dark .day-label {
   border-right: 4px solid #f4f4f0 !important;
   color: #111;
@@ -278,14 +287,14 @@ body.dark .timetable-wrapper {
 }
 
 /* Brutal Colors for assigned courses */
-.color-0 { background-color: #ff9800; }
-.color-1 { background-color: #4caf50; }
-.color-2 { background-color: #00bcd4; }
-.color-3 { background-color: #e91e63; color: white; }
-.color-4 { background-color: #9c27b0; color: white; }
-.color-5 { background-color: #8bc34a; }
-.color-6 { background-color: #03a9f4; }
-.color-7 { background-color: #ff5722; }
+.color-0 { background-color: #ff9800 !important; }
+.color-1 { background-color: #4caf50 !important; }
+.color-2 { background-color: #00bcd4 !important; }
+.color-3 { background-color: #e91e63 !important; color: white !important; }
+.color-4 { background-color: #9c27b0 !important; color: white !important; }
+.color-5 { background-color: #8bc34a !important; }
+.color-6 { background-color: #03a9f4 !important; }
+.color-7 { background-color: #ff5722 !important; }
 
 @media print {
   /* Force print background colors for courses */

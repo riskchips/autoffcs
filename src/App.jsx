@@ -597,7 +597,7 @@ function App() {
               </div>
             </>
           ) : (
-            <div className="brutal-box" style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', background: '#eee' }}>
+            <div className="brutal-box" style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', background: isDarkMode ? '#1a1a1a' : '#eee' }}>
               <h2 style={{ fontSize: '2rem', opacity: 0.5 }}>NO DATA</h2>
               <p style={{ fontWeight: 600, opacity: 0.6 }}>Paste your courses and hit GENERATE to see the magic.</p>
             </div>

@@ -481,3 +481,20 @@ body.dark .swap-modal-overlay {
   background: rgba(255,255,255,0.1);
   backdrop-filter: blur(4px);
 }
+
+@media (max-width: 768px) {
+  .swap-modal-overlay {
+    padding: 0.5rem;
+  }
+  .swap-modal-content {
+    max-height: 95vh;
+  }
+  .swap-option {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+  }
+  .swap-option button {
+    width: 100%;
+  }
+}

@@ -127,7 +127,7 @@ function App() {
       const rawCourse = payload.courses.find(c => c.course_code === data.courseCode);
       
       if (rawCourse) {
-        const bundles = getAvailableBundles(rawCourse, currentTimetable.courses, data.courseCode);
+        const bundles = getAvailableBundles(rawCourse, currentTimetable.courses, data.courseCode, theoryPref);
         setSwapModalData({
           courseCode: data.courseCode,
           courseName: rawCourse.course_name,

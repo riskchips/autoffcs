@@ -60,7 +60,7 @@ function cartesianProduct(arrays) {
  * @param {string} courseCode - The code of the course we want to swap.
  * @returns {Array} List of valid bundles.
  */
-export function getAvailableBundles(rawCourse, currentTimetable, courseCode) {
+export function getAvailableBundles(rawCourse, currentTimetable, courseCode, theoryPreference) {
   if (!rawCourse || !rawCourse.allocations) return [];
 
   // Calculate used time blocks by ALL OTHER courses in the current timetable
@@ -94,7 +94,19 @@ export function getAvailableBundles(rawCourse, currentTimetable, courseCode) {
       score: getFacultyScore(alloc.faculty)
     };
     
-    // We don't filter by theory preference here because the user manually wants to explore all valid options.
+    // Enforce theory preference
+    let keep = true;
+    if (theoryPreference && theoryPreference !== 'mixed') {
+      if (THEORY_TYPES.includes(alloc.course_type)) {
+        if (allocWithMeta.period !== theoryPreference && allocWithMeta.period !== 'mixed') keep = false;
+      } else if (LAB_TYPES.includes(alloc.course_type)) {
+        const expectedLabPeriod = theoryPreference === 'morning' ? 'evening' : 'morning';
+        if (allocWithMeta.period !== expectedLabPeriod && allocWithMeta.period !== 'mixed') keep = false;
+      }
+    }
+
+    if (!keep) continue;
+    
     // However, they must NOT clash with `usedBlocks`.
     let internalClash = false;
     for (const tb of allocWithMeta.timeBlocks) {

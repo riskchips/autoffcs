@@ -111,6 +111,17 @@ const FacultyRatings = () => {
     return mapped;
   }, [deferredSearchTerm]);
 
+  const flatSearchResults = useMemo(() => {
+    if (!deferredSearchTerm.trim()) return [];
+    const flat = [];
+    filteredData.forEach(school => {
+      school.faculty.forEach(fac => {
+        flat.push({ ...fac, schoolName: school.schoolName });
+      });
+    });
+    return flat;
+  }, [filteredData, deferredSearchTerm]);
+
   return (
     <div className="faculty-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem', width: '100%' }}>
       <div className="brutal-box" style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -130,61 +141,107 @@ const FacultyRatings = () => {
         )}
       </div>
 
-      <div className="faculty-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '2rem' }}>
-        {filteredData.map((school) => (
-          <motion.div 
-            key={school.schoolId} 
-            className="brutal-box category-box"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '4px solid #111', paddingBottom: '1rem', gap: '1rem' }}>
-              <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0, fontWeight: 900, fontSize: '1.2rem', lineHeight: '1.2' }}>
-                <Building2 size={24} style={{ flexShrink: 0 }} /> 
-                <span style={{ wordBreak: 'break-word' }}>{school.schoolName}</span>
-              </h2>
-              <span style={{ fontWeight: 800, background: '#111', color: '#fff', padding: '0.2rem 0.5rem', fontSize: '0.8rem', flexShrink: 0 }}>
-                {school.faculty.length}
-              </span>
-            </div>
-            
-            <VirtualList 
-              items={school.faculty}
-              itemHeight={70}
-              containerHeight={400}
-              renderItem={(fac) => (
-                <div style={{ 
-                  height: '100%',
-                  padding: '0 1rem', 
-                  background: '#f8f8f8', 
-                  border: '2px solid #111', 
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  gap: '0.5rem'
-                }} className="faculty-item">
-                  <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                    <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.9rem' }}>
-                      {fac.name.replace(/^\d+\s+/, '')}
-                    </span>
-                    <span style={{ fontSize: '0.7rem', opacity: 0.6, fontWeight: 700 }}>ID: {fac.id}</span>
-                  </div>
-                  <div style={{ display: 'flex', gap: '2px', background: '#fff', padding: '0.3rem', border: '2px solid #111', borderRadius: '4px', flexShrink: 0 }}>
-                    {renderStars(fac.name)}
-                  </div>
-                </div>
-              )}
-            />
-          </motion.div>
-        ))}
-        
-        {filteredData.length === 0 && (
-          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', fontWeight: 800, fontSize: '1.5rem', opacity: 0.5 }}>
-            NO FACULTY FOUND
+      {deferredSearchTerm.trim() ? (
+        <motion.div 
+          className="brutal-box category-box"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '4px solid #111', paddingBottom: '1rem' }}>
+            <h2 style={{ margin: 0, fontWeight: 900, fontSize: '1.5rem' }}>SEARCH RESULTS</h2>
+            <span style={{ fontWeight: 800, background: '#111', color: '#fff', padding: '0.2rem 0.5rem', fontSize: '0.9rem' }}>
+              {flatSearchResults.length} FOUND
+            </span>
           </div>
-        )}
-      </div>
+          
+          <VirtualList 
+            items={flatSearchResults}
+            itemHeight={85}
+            containerHeight={600}
+            renderItem={(fac) => (
+              <div style={{ 
+                height: '100%',
+                padding: '0 1rem', 
+                background: '#f8f8f8', 
+                border: '2px solid #111', 
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                gap: '1rem'
+              }} className="faculty-item">
+                <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                  <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '1rem' }}>
+                    {fac.name.replace(/^\d+\s+/, '')} <span style={{ fontSize: '0.7rem', opacity: 0.6, fontWeight: 700 }}>({fac.id})</span>
+                  </span>
+                  <span style={{ fontSize: '0.8rem', opacity: 0.8, fontWeight: 800, color: '#2196f3', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {fac.schoolName}
+                  </span>
+                </div>
+                <div style={{ display: 'flex', gap: '2px', background: '#fff', padding: '0.3rem', border: '2px solid #111', borderRadius: '4px', flexShrink: 0 }}>
+                  {renderStars(fac.name)}
+                </div>
+              </div>
+            )}
+          />
+        </motion.div>
+      ) : (
+        <div className="faculty-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '2rem' }}>
+          {filteredData.map((school) => (
+            <motion.div 
+              key={school.schoolId} 
+              className="brutal-box category-box"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '4px solid #111', paddingBottom: '1rem', gap: '1rem' }}>
+                <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0, fontWeight: 900, fontSize: '1.2rem', lineHeight: '1.2' }}>
+                  <Building2 size={24} style={{ flexShrink: 0 }} /> 
+                  <span style={{ wordBreak: 'break-word' }}>{school.schoolName}</span>
+                </h2>
+                <span style={{ fontWeight: 800, background: '#111', color: '#fff', padding: '0.2rem 0.5rem', fontSize: '0.8rem', flexShrink: 0 }}>
+                  {school.faculty.length}
+                </span>
+              </div>
+              
+              <VirtualList 
+                items={school.faculty}
+                itemHeight={70}
+                containerHeight={400}
+                renderItem={(fac) => (
+                  <div style={{ 
+                    height: '100%',
+                    padding: '0 1rem', 
+                    background: '#f8f8f8', 
+                    border: '2px solid #111', 
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                  }} className="faculty-item">
+                    <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                      <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.9rem' }}>
+                        {fac.name.replace(/^\d+\s+/, '')}
+                      </span>
+                      <span style={{ fontSize: '0.7rem', opacity: 0.6, fontWeight: 700 }}>ID: {fac.id}</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '2px', background: '#fff', padding: '0.3rem', border: '2px solid #111', borderRadius: '4px', flexShrink: 0 }}>
+                      {renderStars(fac.name)}
+                    </div>
+                  </div>
+                )}
+              />
+            </motion.div>
+          ))}
+          
+          {filteredData.length === 0 && (
+            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', fontWeight: 800, fontSize: '1.5rem', opacity: 0.5 }}>
+              NO FACULTY FOUND
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,11 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useDeferredValue } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Star, Building2 } from 'lucide-react';
+import { FixedSizeList } from 'react-window';
 import vitFacultyData from '../vit-faculty.json';
 import { getFacultyScore } from '../data/facultyRatings';
 
 const FacultyRatings = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const deferredSearchTerm = useDeferredValue(searchTerm);
 
   // Helper to render stars based on score
   const renderStars = (name) => {
@@ -32,22 +34,51 @@ const FacultyRatings = () => {
     ));
   };
 
-  // Filter and process data
+  // Filter and process data based on deferredSearchTerm
   const filteredData = useMemo(() => {
-    if (!searchTerm.trim()) {
+    if (!deferredSearchTerm.trim()) {
       return vitFacultyData;
     }
     
-    const term = searchTerm.toLowerCase();
+    const term = deferredSearchTerm.toLowerCase();
     
     return vitFacultyData.map(school => {
-      const matchingFaculty = school.faculty.filter(f => f.name.toLowerCase().includes(term));
+      const matchingFaculty = school.faculty.filter(f => f.name.toLowerCase().includes(term) || f.id.includes(term));
       if (matchingFaculty.length > 0) {
         return { ...school, faculty: matchingFaculty };
       }
       return null;
     }).filter(Boolean);
-  }, [searchTerm]);
+  }, [deferredSearchTerm]);
+
+  // Row renderer for react-window
+  const Row = ({ index, style, data }) => {
+    const fac = data[index];
+    return (
+      <div style={{ ...style, padding: '0.25rem 0.5rem' }}>
+        <div style={{ 
+          height: '100%',
+          padding: '0 1rem', 
+          background: '#f8f8f8', 
+          border: '2px solid #111', 
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '1rem'
+        }} className="faculty-item">
+          <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {fac.name.replace(/^\d+\s+/, '')}
+            </span>
+            <span style={{ fontSize: '0.7rem', opacity: 0.6, fontWeight: 700 }}>ID: {fac.id}</span>
+          </div>
+          <div style={{ display: 'flex', gap: '2px', background: '#fff', padding: '0.3rem', border: '2px solid #111', borderRadius: '4px', flexShrink: 0 }}>
+            {renderStars(fac.name)}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="faculty-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem', width: '100%' }}>
@@ -61,6 +92,9 @@ const FacultyRatings = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{ flex: 1, fontSize: '1.2rem', padding: '0.8rem' }}
         />
+        {searchTerm !== deferredSearchTerm && (
+          <span style={{ fontWeight: 700, color: '#ff9800' }}>SEARCHING...</span>
+        )}
       </div>
 
       <div className="faculty-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
@@ -81,26 +115,17 @@ const FacultyRatings = () => {
               </span>
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '400px', overflowY: 'auto', paddingRight: '0.5rem' }} className="faculty-list-scroll">
-              {school.faculty.map((fac) => (
-                <div key={fac.id} style={{ 
-                  padding: '0.8rem 1rem', 
-                  background: '#f8f8f8', 
-                  border: '2px solid #111', 
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  gap: '1rem'
-                }} className="faculty-item">
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontWeight: 800 }}>{fac.name.replace(/^\d+\s+/, '')}</span>
-                    <span style={{ fontSize: '0.7rem', opacity: 0.6, fontWeight: 700 }}>ID: {fac.id}</span>
-                  </div>
-                  <div style={{ display: 'flex', gap: '2px', background: '#fff', padding: '0.3rem', border: '2px solid #111', borderRadius: '4px' }}>
-                    {renderStars(fac.name)}
-                  </div>
-                </div>
-              ))}
+            <div style={{ height: '400px', width: '100%' }}>
+              <FixedSizeList
+                height={400}
+                itemCount={school.faculty.length}
+                itemSize={70}
+                width="100%"
+                itemData={school.faculty}
+                className="faculty-list-scroll"
+              >
+                {Row}
+              </FixedSizeList>
             </div>
           </motion.div>
         ))}

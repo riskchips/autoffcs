@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Settings, Play, ArrowLeft, ArrowRight, Code2, Briefcase, ExternalLink, Moon, Sun } from 'lucide-react';
+import { Settings, Play, ArrowLeft, ArrowRight, Code2, Briefcase, ExternalLink, Moon, Sun, Users, Calendar } from 'lucide-react';
 import { parseFFCSText } from './utils/parser';
+import FacultyRatings from './FacultyRatings';
 import './index.css';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [activeTab, setActiveTab] = useState('timetable');
 
   useEffect(() => {
     if (isDarkMode) document.body.classList.add('dark');
@@ -162,6 +164,12 @@ function App() {
             <button onClick={() => setIsDarkMode(!isDarkMode)} className="brutal-button" style={{ padding: '0.5rem', fontSize: '0.9rem', background: isDarkMode ? '#fff' : '#111', color: isDarkMode ? '#111' : '#fff' }}>
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />} {isDarkMode ? 'LIGHT' : 'DARK'}
             </button>
+            <button onClick={() => setActiveTab('timetable')} className="brutal-button" style={{ padding: '0.5rem', fontSize: '0.9rem', background: activeTab === 'timetable' ? 'var(--primary)' : '#fff' }}>
+              <Calendar size={20} color="#111" /> <span style={{ color: '#111' }}>TIMETABLE</span>
+            </button>
+            <button onClick={() => setActiveTab('faculty')} className="brutal-button" style={{ padding: '0.5rem', fontSize: '0.9rem', background: activeTab === 'faculty' ? 'var(--primary)' : '#fff' }}>
+              <Users size={20} color="#111" /> <span style={{ color: '#111' }}>FACULTY</span>
+            </button>
             <a href="https://github.com/riskchips" target="_blank" rel="noreferrer" className="brutal-button" style={{ padding: '0.5rem', fontSize: '0.9rem', background: '#fff' }}>
               <Code2 size={20} color="#111" /> <span style={{ color: '#111' }}>GITHUB</span>
             </a>
@@ -175,10 +183,12 @@ function App() {
         </div>
       </header>
 
-      <main className="layout-grid">
+      <main className={activeTab === 'timetable' ? "layout-grid" : ""}>
         
-        {/* SIDEBAR */}
-        <div className="sidebar-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        {/* SIDEBAR OR FACULTY RATINGS */}
+        {activeTab === 'timetable' ? (
+          <>
+            <div className="sidebar-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           <div className="brutal-box">
             <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Settings /> CONFIG
@@ -372,6 +382,10 @@ function App() {
             </div>
           )}
         </div>
+          </>
+        ) : (
+          <FacultyRatings />
+        )}
       </main>
     </div>
   );

@@ -17,6 +17,7 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeTab, setActiveTab] = useState('timetable');
   const [swapModalData, setSwapModalData] = useState(null);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     if (isDarkMode) document.body.classList.add('dark');
@@ -166,22 +167,32 @@ function App() {
     setSwapModalData(null);
   };
 
-  const handleDownload = async () => {
-    const element = document.getElementById('capture-area');
-    if (!element) return;
-    try {
-      const canvas = await html2canvas(element, { 
-        scale: 2, 
-        backgroundColor: isDarkMode ? '#222' : '#fff'
-      });
-      const dataUrl = canvas.toDataURL('image/png');
-      const link = document.createElement('a');
-      link.download = 'autoffcs-timetable.png';
-      link.href = dataUrl;
-      link.click();
-    } catch (e) {
-      console.error('Failed to download image', e);
-    }
+  const handleDownload = () => {
+    setIsDownloading(true);
+    
+    // Wait for React to render the hidden elements before capturing
+    setTimeout(async () => {
+      const element = document.getElementById('capture-area');
+      if (!element) {
+        setIsDownloading(false);
+        return;
+      }
+      try {
+        const canvas = await html2canvas(element, { 
+          scale: 2, 
+          backgroundColor: isDarkMode ? '#111' : '#fff'
+        });
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = 'autoffcs-timetable.png';
+        link.href = dataUrl;
+        link.click();
+      } catch (e) {
+        console.error('Failed to download image', e);
+      } finally {
+        setIsDownloading(false);
+      }
+    }, 150);
   };
 
   const renderCell = (slots) => {
@@ -337,32 +348,34 @@ function App() {
                 </button>
               </div>
 
-              <div className="timetable-wrapper" style={{ padding: '2rem', background: isDarkMode ? '#222' : '#eee' }}>
+              <div className="timetable-wrapper" style={{ padding: isDownloading ? '0' : '0' }}>
                 <div 
                   id="capture-area" 
                   style={{ 
                     position: 'relative', 
                     width: 'max-content', 
-                    padding: '2rem', 
-                    background: isDarkMode ? '#111' : '#fff',
-                    border: '6px solid #111',
-                    boxShadow: isDarkMode ? '12px 12px 0px #fff' : '12px 12px 0px #111',
+                    padding: isDownloading ? '2rem' : '1rem', 
+                    background: isDarkMode ? (isDownloading ? '#111' : '#222') : (isDownloading ? '#fff' : '#fff'),
+                    border: isDownloading ? '6px solid #111' : 'none',
+                    boxShadow: isDownloading ? (isDarkMode ? '12px 12px 0px #fff' : '12px 12px 0px #111') : 'none',
                     margin: '0 auto'
                   }}
                 >
                   
                   {/* Internal header for the exported image */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: '6px solid #111', paddingBottom: '1rem', marginBottom: '2rem' }}>
-                    <div>
-                      <h2 style={{ fontSize: '3rem', fontWeight: 900, margin: 0, lineHeight: 1, letterSpacing: '-2px' }}>AUTOFFCS</h2>
-                      <span style={{ background: '#ffeb3b', color: '#111', fontWeight: 900, padding: '0.2rem 0.5rem', border: '2px solid #111' }}>
-                        SMART TIMETABLE
-                      </span>
+                  {isDownloading && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: '6px solid #111', paddingBottom: '1rem', marginBottom: '2rem' }}>
+                      <div>
+                        <h2 style={{ fontSize: '3rem', fontWeight: 900, margin: 0, lineHeight: 1, letterSpacing: '-2px' }}>AUTOFFCS</h2>
+                        <span style={{ background: '#ffeb3b', color: '#111', fontWeight: 900, padding: '0.2rem 0.5rem', border: '2px solid #111' }}>
+                          SMART TIMETABLE
+                        </span>
+                      </div>
+                      <div style={{ background: '#111', color: '#4caf50', fontWeight: 900, fontSize: '1.5rem', padding: '0.5rem 1rem', border: '4px solid #111', boxShadow: '4px 4px 0px #ffeb3b' }}>
+                        SCORE: {currentTimetable.totalScore}
+                      </div>
                     </div>
-                    <div style={{ background: '#111', color: '#4caf50', fontWeight: 900, fontSize: '1.5rem', padding: '0.5rem 1rem', border: '4px solid #111', boxShadow: '4px 4px 0px #ffeb3b' }}>
-                      SCORE: {currentTimetable.totalScore}
-                    </div>
-                  </div>
+                  )}
 
                   <table className="timetable">
                   <tr className="theory-header">
@@ -481,27 +494,29 @@ function App() {
                 </table>
                 
                   {/* Brutalist Watermark Footer */}
-                  <div style={{ 
-                    marginTop: '2rem', 
-                    background: '#ff5722', 
-                    color: '#111', 
-                    border: '4px solid #111', 
-                    boxShadow: '6px 6px 0px #111',
-                    padding: '1.5rem',
-                    textAlign: 'center',
-                    fontWeight: 900,
-                    fontSize: '1.8rem',
-                    letterSpacing: '6px',
-                    textTransform: 'uppercase',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '1rem'
-                  }}>
-                    <span>⚡</span> 
-                    GENERATED ON AUTOFFCS.ARNABDEV.SPACE 
-                    <span>⚡</span>
-                  </div>
+                  {isDownloading && (
+                    <div style={{ 
+                      marginTop: '2rem', 
+                      background: '#ff5722', 
+                      color: '#111', 
+                      border: '4px solid #111', 
+                      boxShadow: '6px 6px 0px #111',
+                      padding: '1.5rem',
+                      textAlign: 'center',
+                      fontWeight: 900,
+                      fontSize: '1.8rem',
+                      letterSpacing: '6px',
+                      textTransform: 'uppercase',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '1rem'
+                    }}>
+                      <span>⚡</span> 
+                      GENERATED ON AUTOFFCS.ARNABDEV.SPACE 
+                      <span>⚡</span>
+                    </div>
+                  )}
 
                 </div>
               </div>

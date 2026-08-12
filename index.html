@@ -6,6 +6,11 @@
     <title>Auto FFCS - Edition</title>
   </head>
   <body>
+    <script>
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark');
+      }
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

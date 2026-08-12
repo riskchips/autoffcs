@@ -14,14 +14,21 @@ function App() {
   const [timetables, setTimetables] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('theme') === 'dark';
+  });
   const [activeTab, setActiveTab] = useState('timetable');
   const [swapModalData, setSwapModalData] = useState(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
-    if (isDarkMode) document.body.classList.add('dark');
-    else document.body.classList.remove('dark');
+    if (isDarkMode) {
+      document.body.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.body.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
   }, [isDarkMode]);
 
   const handleGenerate = async () => {
@@ -380,6 +387,7 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               style={{ 
                 background: status.type === 'error' ? '#ffcdd2' : status.type === 'success' ? '#c8e6c9' : '#fff',
+                color: '#111',
                 fontWeight: 700
               }}
             >

@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Star, AlertTriangle, XCircle, ThumbsUp, Award } from 'lucide-react';
-import { FACULTY_RATINGS } from '../data/facultyRatings';
+import { Search, Star, Building2 } from 'lucide-react';
+import vitFacultyData from '../vit-faculty.json';
+import { getFacultyScore } from '../data/facultyRatings';
 
 const FacultyRatings = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Helper to render stars
-  const renderStars = (count, color) => {
+  // Helper to render stars based on score
+  const renderStars = (name) => {
+    // Strip ID from name (e.g., "12832 RAMMOHAN A" -> "RAMMOHAN A")
+    const cleanName = name.replace(/^\d+\s+/, '');
+    const score = getFacultyScore(cleanName);
+    
+    let count = 3; // default neutral
+    let color = '#9e9e9e'; // default grey
+    
+    if (score === 2) { count = 5; color = '#4caf50'; } // exceptional
+    else if (score === 1) { count = 4; color = '#2196f3'; } // good
+    else if (score === -1) { count = 2; color = '#ff9800'; } // bad
+    else if (score === -2) { count = 1; color = '#f44336'; } // blacklisted
+
     return Array(5).fill(0).map((_, i) => (
       <Star 
         key={i} 
-        size={16} 
+        size={14} 
         fill={i < count ? color : 'transparent'} 
         color={color} 
         style={{ opacity: i < count ? 1 : 0.3 }}
@@ -19,40 +32,22 @@ const FacultyRatings = () => {
     ));
   };
 
-  const categories = [
-    {
-      id: 'exceptional',
-      title: 'EXCEPTIONAL',
-      icon: <Award size={24} color="#4caf50" />,
-      color: '#4caf50',
-      stars: 5,
-      data: FACULTY_RATINGS.exceptional
-    },
-    {
-      id: 'good',
-      title: 'GOOD',
-      icon: <ThumbsUp size={24} color="#2196f3" />,
-      color: '#2196f3',
-      stars: 4,
-      data: FACULTY_RATINGS.good
-    },
-    {
-      id: 'bad',
-      title: 'BAD',
-      icon: <AlertTriangle size={24} color="#ff9800" />,
-      color: '#ff9800',
-      stars: 2,
-      data: FACULTY_RATINGS.bad
-    },
-    {
-      id: 'blacklisted',
-      title: 'BLACKLISTED',
-      icon: <XCircle size={24} color="#f44336" />,
-      color: '#f44336',
-      stars: 1,
-      data: FACULTY_RATINGS.blacklisted
+  // Filter and process data
+  const filteredData = useMemo(() => {
+    if (!searchTerm.trim()) {
+      return vitFacultyData;
     }
-  ];
+    
+    const term = searchTerm.toLowerCase();
+    
+    return vitFacultyData.map(school => {
+      const matchingFaculty = school.faculty.filter(f => f.name.toLowerCase().includes(term));
+      if (matchingFaculty.length > 0) {
+        return { ...school, faculty: matchingFaculty };
+      }
+      return null;
+    }).filter(Boolean);
+  }, [searchTerm]);
 
   return (
     <div className="faculty-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem', width: '100%' }}>
@@ -61,54 +56,60 @@ const FacultyRatings = () => {
         <input 
           type="text" 
           className="brutal-input" 
-          placeholder="SEARCH FACULTY BY NAME..."
+          placeholder="SEARCH FACULTY BY NAME OR ID..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{ flex: 1, fontSize: '1.2rem', padding: '0.8rem' }}
         />
       </div>
 
-      <div className="faculty-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-        {categories.map((cat) => {
-          const filteredData = cat.data.filter(name => name.toLowerCase().includes(searchTerm.toLowerCase()));
-          
-          if (filteredData.length === 0) return null;
-
-          return (
-            <motion.div 
-              key={cat.id} 
-              className="brutal-box category-box"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              style={{ display: 'flex', flexDirection: 'column', gap: '1rem', borderColor: cat.color }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '4px solid #111', paddingBottom: '1rem', borderColor: 'inherit' }}>
-                <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0, color: cat.color, fontWeight: 900 }}>
-                  {cat.icon} {cat.title}
-                </h2>
-                <div style={{ display: 'flex', gap: '2px' }}>
-                  {renderStars(cat.stars, cat.color)}
-                </div>
-              </div>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '400px', overflowY: 'auto', paddingRight: '0.5rem' }} className="faculty-list-scroll">
-                {filteredData.map((name, i) => (
-                  <div key={i} style={{ 
-                    padding: '0.5rem 1rem', 
-                    background: '#f8f8f8', 
-                    border: '2px solid #111', 
-                    fontWeight: 700,
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
-                  }} className="faculty-item">
-                    <span>{name}</span>
+      <div className="faculty-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
+        {filteredData.map((school) => (
+          <motion.div 
+            key={school.schoolId} 
+            className="brutal-box category-box"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '4px solid #111', paddingBottom: '1rem' }}>
+              <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0, fontWeight: 900, fontSize: '1.2rem' }}>
+                <Building2 size={24} /> {school.schoolName}
+              </h2>
+              <span style={{ fontWeight: 800, background: '#111', color: '#fff', padding: '0.2rem 0.5rem', fontSize: '0.8rem' }}>
+                {school.faculty.length}
+              </span>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '400px', overflowY: 'auto', paddingRight: '0.5rem' }} className="faculty-list-scroll">
+              {school.faculty.map((fac) => (
+                <div key={fac.id} style={{ 
+                  padding: '0.8rem 1rem', 
+                  background: '#f8f8f8', 
+                  border: '2px solid #111', 
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '1rem'
+                }} className="faculty-item">
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ fontWeight: 800 }}>{fac.name.replace(/^\d+\s+/, '')}</span>
+                    <span style={{ fontSize: '0.7rem', opacity: 0.6, fontWeight: 700 }}>ID: {fac.id}</span>
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          );
-        })}
+                  <div style={{ display: 'flex', gap: '2px', background: '#fff', padding: '0.3rem', border: '2px solid #111', borderRadius: '4px' }}>
+                    {renderStars(fac.name)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        ))}
+        
+        {filteredData.length === 0 && (
+          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', fontWeight: 800, fontSize: '1.5rem', opacity: 0.5 }}>
+            NO FACULTY FOUND
+          </div>
+        )}
       </div>
     </div>
   );

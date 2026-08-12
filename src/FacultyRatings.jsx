@@ -1,12 +1,19 @@
-import React, { useState, useMemo, useDeferredValue } from 'react';
+import React, { useState, useMemo, useDeferredValue, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Star, Building2 } from 'lucide-react';
 import vitFacultyData from '../vit-faculty.json';
 import { getFacultyScore } from '../data/facultyRatings';
 
-// Dependency-free Virtual List to fix Vercel build issues with react-window
+// Dependency-free Virtual List
 const VirtualList = ({ items, itemHeight, containerHeight, renderItem }) => {
   const [scrollTop, setScrollTop] = useState(0);
+  const scrollRef = useRef(null);
+  
+  // Reset scroll when items change (e.g. during search)
+  useEffect(() => {
+    setScrollTop(0);
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  }, [items]);
   
   const startIndex = Math.floor(scrollTop / itemHeight);
   const visibleItemCount = Math.ceil(containerHeight / itemHeight);
@@ -16,15 +23,18 @@ const VirtualList = ({ items, itemHeight, containerHeight, renderItem }) => {
   
   const visibleItems = [];
   for (let i = renderStartIndex; i <= renderEndIndex; i++) {
-    visibleItems.push(
-      <div key={i} style={{ position: 'absolute', top: i * itemHeight, width: '100%', height: itemHeight, padding: '0.25rem 0.5rem' }}>
-        {renderItem(items[i], i)}
-      </div>
-    );
+    if (items[i]) {
+      visibleItems.push(
+        <div key={i} style={{ position: 'absolute', top: i * itemHeight, width: '100%', height: itemHeight, padding: '0.25rem 0.5rem' }}>
+          {renderItem(items[i], i)}
+        </div>
+      );
+    }
   }
   
   return (
     <div 
+      ref={scrollRef}
       style={{ height: containerHeight, width: '100%', overflowY: 'auto', position: 'relative' }} 
       onScroll={e => setScrollTop(e.target.scrollTop)}
       className="faculty-list-scroll"

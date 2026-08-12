@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Settings, Play, ArrowLeft, ArrowRight, Code2, Briefcase, ExternalLink, Moon, Sun, Users, Calendar } from 'lucide-react';
+import { Settings, Play, ArrowLeft, ArrowRight, Code2, Briefcase, ExternalLink, Moon, Sun, Users, Calendar, X, Check } from 'lucide-react';
 import { parseFFCSText } from './utils/parser';
+import { getAvailableBundles } from './utils/clashChecker';
 import FacultyRatings from './FacultyRatings';
 import './index.css';
 
@@ -14,6 +15,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeTab, setActiveTab] = useState('timetable');
+  const [swapModalData, setSwapModalData] = useState(null);
 
   useEffect(() => {
     if (isDarkMode) document.body.classList.add('dark');
@@ -118,11 +120,61 @@ function App() {
     return { isFilled: false };
   };
 
+  const handleCellClick = (data) => {
+    if (!data.isFilled) return;
+    try {
+      const payload = parseFFCSText(rawData);
+      const rawCourse = payload.courses.find(c => c.course_code === data.courseCode);
+      
+      if (rawCourse) {
+        const bundles = getAvailableBundles(rawCourse, currentTimetable.courses, data.courseCode);
+        setSwapModalData({
+          courseCode: data.courseCode,
+          courseName: rawCourse.course_name,
+          currentFaculty: data.faculty,
+          bundles: bundles,
+          currentSlotsSig: currentTimetable.courses.find(c => c.course_code === data.courseCode)?.allocations.map(a => a.slot.join('+')).sort().join('|')
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleSwap = (newBundle) => {
+    const newCourses = currentTimetable.courses.map(c => {
+      if (c.course_code === swapModalData.courseCode) {
+        return {
+          course_code: c.course_code,
+          course_name: swapModalData.courseName,
+          bundle_faculty: newBundle.facultyName,
+          allocations: newBundle.allocations.map(a => {
+             const { timeBlocks, score, period, ...cleanAlloc } = a;
+             return cleanAlloc;
+          })
+        };
+      }
+      return c;
+    });
+    
+    const newTimetable = { ...currentTimetable, courses: newCourses };
+    const newTimetables = [...timetables];
+    newTimetables[currentIndex] = newTimetable;
+    
+    setTimetables(newTimetables);
+    setSwapModalData(null);
+  };
+
   const renderCell = (slots) => {
     const data = getCellData(slots);
     
     return (
-      <td className={`slot-cell ${data.isFilled ? `slot-filled ${data.colorClass}` : ''}`}>
+      <td 
+        className={`slot-cell ${data.isFilled ? `slot-filled ${data.colorClass}` : ''}`}
+        onClick={() => handleCellClick(data)}
+        style={{ cursor: data.isFilled ? 'pointer' : 'default' }}
+        title={data.isFilled ? "Click to change faculty/slots" : ""}
+      >
         <span className="slot-name">{slots.join(' / ')}</span>
         <AnimatePresence mode="wait">
           {data.isFilled && (
@@ -133,6 +185,7 @@ function App() {
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}
+              className="slot-content-wrapper"
             >
               <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase' }}>[{data.type}]</span>
               <span style={{ fontWeight: 800 }}>{data.courseCode}</span>
@@ -387,6 +440,69 @@ function App() {
           <FacultyRatings />
         )}
       </main>
+
+      <AnimatePresence>
+        {swapModalData && (
+          <div className="swap-modal-overlay" onClick={() => setSwapModalData(null)}>
+            <motion.div 
+              className="swap-modal-content brutal-box" 
+              initial={{ y: 50, opacity: 0 }} 
+              animate={{ y: 0, opacity: 1 }} 
+              exit={{ y: 50, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '4px solid #111', paddingBottom: '1rem' }}>
+                <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 900 }}>{swapModalData.courseCode} - SWAP FACULTY</h2>
+                <button className="brutal-button" style={{ padding: '0.5rem' }} onClick={() => setSwapModalData(null)}><X size={20} /></button>
+              </div>
+              
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <p style={{ fontWeight: 800 }}>{swapModalData.courseName}</p>
+                <span style={{ fontWeight: 800, background: '#111', color: '#fff', padding: '0.2rem 0.5rem' }}>
+                  {swapModalData.bundles.length} VALID OPTIONS
+                </span>
+              </div>
+              
+              <div className="swap-options-list">
+                {swapModalData.bundles.length === 0 && (
+                  <p style={{ fontWeight: 700, opacity: 0.6, textAlign: 'center', padding: '2rem 0' }}>
+                    No other valid, non-clashing faculty found for this course.
+                  </p>
+                )}
+                
+                {swapModalData.bundles.map((bundle, idx) => {
+                  const sig = bundle.allocations.map(a => a.slot.join('+')).sort().join('|');
+                  const isCurrent = sig === swapModalData.currentSlotsSig && bundle.facultyName === swapModalData.currentFaculty;
+                  
+                  return (
+                    <div key={idx} className="brutal-box swap-option" style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: isCurrent ? '#c8e6c9' : '#fff' }}>
+                      <div>
+                        <p style={{ fontWeight: 900, fontSize: '1.2rem', marginBottom: '0.5rem' }}>{bundle.facultyName}</p>
+                        {bundle.allocations.map((a, i) => (
+                          <p key={i} style={{ fontSize: '0.9rem', fontWeight: 700 }}>
+                            <span style={{ display: 'inline-block', width: '40px' }}>[{a.course_type}]</span>
+                            <span style={{ color: '#2196f3', marginRight: '0.5rem' }}>{a.slot.join(' + ')}</span>
+                            <span style={{ background: '#111', color: '#ffeb3b', padding: '0 4px' }}>{a.venue}</span>
+                          </p>
+                        ))}
+                      </div>
+                      <button 
+                        className="brutal-button" 
+                        onClick={() => handleSwap(bundle)}
+                        disabled={isCurrent}
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: isCurrent ? '#ccc' : '', cursor: isCurrent ? 'not-allowed' : 'pointer' }}
+                      >
+                        {isCurrent ? 'SELECTED' : 'SWAP'} {isCurrent ? <Check size={16} /> : null}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 }

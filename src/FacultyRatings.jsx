@@ -1,9 +1,40 @@
 import React, { useState, useMemo, useDeferredValue } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Star, Building2 } from 'lucide-react';
-import { FixedSizeList } from 'react-window';
 import vitFacultyData from '../vit-faculty.json';
 import { getFacultyScore } from '../data/facultyRatings';
+
+// Dependency-free Virtual List to fix Vercel build issues with react-window
+const VirtualList = ({ items, itemHeight, containerHeight, renderItem }) => {
+  const [scrollTop, setScrollTop] = useState(0);
+  
+  const startIndex = Math.floor(scrollTop / itemHeight);
+  const visibleItemCount = Math.ceil(containerHeight / itemHeight);
+  
+  const renderStartIndex = Math.max(0, startIndex - 2);
+  const renderEndIndex = Math.min(items.length - 1, startIndex + visibleItemCount + 2);
+  
+  const visibleItems = [];
+  for (let i = renderStartIndex; i <= renderEndIndex; i++) {
+    visibleItems.push(
+      <div key={i} style={{ position: 'absolute', top: i * itemHeight, width: '100%', height: itemHeight, padding: '0.25rem 0.5rem' }}>
+        {renderItem(items[i], i)}
+      </div>
+    );
+  }
+  
+  return (
+    <div 
+      style={{ height: containerHeight, width: '100%', overflowY: 'auto', position: 'relative' }} 
+      onScroll={e => setScrollTop(e.target.scrollTop)}
+      className="faculty-list-scroll"
+    >
+      <div style={{ height: items.length * itemHeight, position: 'relative' }}>
+        {visibleItems}
+      </div>
+    </div>
+  );
+};
 
 const FacultyRatings = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,17 +42,16 @@ const FacultyRatings = () => {
 
   // Helper to render stars based on score
   const renderStars = (name) => {
-    // Strip ID from name (e.g., "12832 RAMMOHAN A" -> "RAMMOHAN A")
     const cleanName = name.replace(/^\d+\s+/, '');
     const score = getFacultyScore(cleanName);
     
-    let count = 3; // default neutral
-    let color = '#9e9e9e'; // default grey
+    let count = 3; 
+    let color = '#9e9e9e'; 
     
-    if (score === 2) { count = 5; color = '#4caf50'; } // exceptional
-    else if (score === 1) { count = 4; color = '#2196f3'; } // good
-    else if (score === -1) { count = 2; color = '#ff9800'; } // bad
-    else if (score === -2) { count = 1; color = '#f44336'; } // blacklisted
+    if (score === 2) { count = 5; color = '#4caf50'; } 
+    else if (score === 1) { count = 4; color = '#2196f3'; } 
+    else if (score === -1) { count = 2; color = '#ff9800'; } 
+    else if (score === -2) { count = 1; color = '#f44336'; } 
 
     return Array(5).fill(0).map((_, i) => (
       <Star 
@@ -34,11 +64,8 @@ const FacultyRatings = () => {
     ));
   };
 
-  // Filter and process data based on deferredSearchTerm
   const filteredData = useMemo(() => {
-    if (!deferredSearchTerm.trim()) {
-      return vitFacultyData;
-    }
+    if (!deferredSearchTerm.trim()) return vitFacultyData;
     
     const term = deferredSearchTerm.toLowerCase();
     
@@ -50,35 +77,6 @@ const FacultyRatings = () => {
       return null;
     }).filter(Boolean);
   }, [deferredSearchTerm]);
-
-  // Row renderer for react-window
-  const Row = ({ index, style, data }) => {
-    const fac = data[index];
-    return (
-      <div style={{ ...style, padding: '0.25rem 0.5rem' }}>
-        <div style={{ 
-          height: '100%',
-          padding: '0 1rem', 
-          background: '#f8f8f8', 
-          border: '2px solid #111', 
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: '1rem'
-        }} className="faculty-item">
-          <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-            <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {fac.name.replace(/^\d+\s+/, '')}
-            </span>
-            <span style={{ fontSize: '0.7rem', opacity: 0.6, fontWeight: 700 }}>ID: {fac.id}</span>
-          </div>
-          <div style={{ display: 'flex', gap: '2px', background: '#fff', padding: '0.3rem', border: '2px solid #111', borderRadius: '4px', flexShrink: 0 }}>
-            {renderStars(fac.name)}
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="faculty-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem', width: '100%' }}>
@@ -115,18 +113,33 @@ const FacultyRatings = () => {
               </span>
             </div>
             
-            <div style={{ height: '400px', width: '100%' }}>
-              <FixedSizeList
-                height={400}
-                itemCount={school.faculty.length}
-                itemSize={70}
-                width="100%"
-                itemData={school.faculty}
-                className="faculty-list-scroll"
-              >
-                {Row}
-              </FixedSizeList>
-            </div>
+            <VirtualList 
+              items={school.faculty}
+              itemHeight={70}
+              containerHeight={400}
+              renderItem={(fac) => (
+                <div style={{ 
+                  height: '100%',
+                  padding: '0 1rem', 
+                  background: '#f8f8f8', 
+                  border: '2px solid #111', 
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '1rem'
+                }} className="faculty-item">
+                  <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                    <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {fac.name.replace(/^\d+\s+/, '')}
+                    </span>
+                    <span style={{ fontSize: '0.7rem', opacity: 0.6, fontWeight: 700 }}>ID: {fac.id}</span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '2px', background: '#fff', padding: '0.3rem', border: '2px solid #111', borderRadius: '4px', flexShrink: 0 }}>
+                    {renderStars(fac.name)}
+                  </div>
+                </div>
+              )}
+            />
           </motion.div>
         ))}
         

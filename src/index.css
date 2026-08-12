@@ -396,6 +396,10 @@ body.dark .timetable-wrapper {
     gap: 1rem;
     align-items: flex-start;
   }
+
+  .hide-mobile {
+    display: none;
+  }
 }
 
 /* Scrollbar */

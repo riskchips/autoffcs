@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Settings, Play, ArrowLeft, ArrowRight, Code2, Briefcase, ExternalLink, Moon, Sun, Users, Calendar, X, Check } from 'lucide-react';
+import { Settings, Play, ArrowLeft, ArrowRight, Code2, Briefcase, ExternalLink, Moon, Sun, Users, Calendar, X, Check, Download } from 'lucide-react';
+import html2canvas from 'html2canvas';
 import { parseFFCSText } from './utils/parser';
 import { getAvailableBundles } from './utils/clashChecker';
 import FacultyRatings from './FacultyRatings';
@@ -165,6 +166,21 @@ function App() {
     setSwapModalData(null);
   };
 
+  const handleDownload = async () => {
+    const element = document.querySelector('.timetable-wrapper');
+    if (!element) return;
+    try {
+      const canvas = await html2canvas(element, { scale: 2, backgroundColor: isDarkMode ? '#222' : '#fff' });
+      const dataUrl = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = 'autoffcs-timetable.png';
+      link.href = dataUrl;
+      link.click();
+    } catch (e) {
+      console.error('Failed to download image', e);
+    }
+  };
+
   const renderCell = (slots) => {
     const data = getCellData(slots);
     
@@ -308,9 +324,20 @@ function App() {
                 <div style={{ fontWeight: 800, fontSize: '1.2rem', background: '#111', color: '#4caf50', padding: '0.5rem 1rem', whiteSpace: 'nowrap' }}>
                   SCORE: {currentTimetable.totalScore}
                 </div>
+                <button 
+                  className="brutal-button" 
+                  onClick={handleDownload}
+                  style={{ background: '#2196f3', color: '#fff', marginLeft: 'auto' }}
+                  title="Download Timetable as Image"
+                >
+                  <Download size={20} /> <span className="hide-mobile">DOWNLOAD</span>
+                </button>
               </div>
 
-              <div className="timetable-wrapper">
+              <div className="timetable-wrapper" style={{ position: 'relative' }}>
+                <div style={{ position: 'absolute', bottom: '10px', right: '10px', opacity: 0.3, fontWeight: 900, fontSize: '1rem', pointerEvents: 'none' }}>
+                  autoffcs.arnabdev.space
+                </div>
                 <table className="timetable">
                   <tr className="theory-header">
                     <th>THEORY (ETH)<br/>HOURS</th>

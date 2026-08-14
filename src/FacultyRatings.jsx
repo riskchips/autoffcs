@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Search, Star, Building2, X, AlertCircle, CheckCircle } from 'lucide-react';
 import { Turnstile } from '@marsidev/react-turnstile';
+import { Virtuoso } from 'react-virtuoso';
 import vitFacultyData from '../vit-faculty.json';
 import { getFacultyScore } from '../data/facultyRatings';
 
@@ -403,38 +404,41 @@ const FacultyRatings = () => {
             </span>
           </div>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '600px', overflowY: 'auto', paddingRight: '0.5rem' }}>
-            {flatSearchResults.map((fac, idx) => (
-              <div 
-                key={fac.id + '_' + idx}
-                onClick={() => setSelectedFaculty(fac)}
-                style={{ 
-                  padding: '1rem', 
-                  background: '#f8f8f8', 
-                  border: '2px solid #111', 
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  gap: '1rem',
-                  cursor: 'pointer'
-                }} 
-                className="faculty-item hover-scale"
-                title="Click to rate this faculty"
-              >
-                <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                  <span style={{ fontWeight: 800, whiteSpace: 'normal', fontSize: '1rem', lineHeight: '1.3', marginBottom: '0.2rem' }}>
-                    {fac.name.replace(/^\d+\s+/, '')}
-                  </span>
-                  <span style={{ fontSize: '0.8rem', opacity: 0.8, fontWeight: 800, color: '#2196f3', whiteSpace: 'normal', lineHeight: '1.3' }}>
-                    {fac.schoolName}
-                  </span>
-                </div>
-                <div style={{ display: 'flex', gap: '2px', background: 'transparent', padding: '0.3rem', border: '2px solid var(--border-color)', borderRadius: '4px', flexShrink: 0 }}>
-                  {renderStars(fac)}
+          <Virtuoso
+            style={{ height: '600px', width: '100%' }}
+            data={flatSearchResults}
+            itemContent={(idx, fac) => (
+              <div style={{ paddingBottom: '0.5rem', paddingRight: '0.5rem' }}>
+                <div 
+                  onClick={() => setSelectedFaculty(fac)}
+                  style={{ 
+                    padding: '1rem', 
+                    background: '#f8f8f8', 
+                    border: '2px solid #111', 
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    cursor: 'pointer'
+                  }} 
+                  className="faculty-item hover-scale"
+                  title="Click to rate this faculty"
+                >
+                  <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                    <span style={{ fontWeight: 800, whiteSpace: 'normal', fontSize: '1rem', lineHeight: '1.3', marginBottom: '0.2rem' }}>
+                      {fac.name.replace(/^\d+\s+/, '')}
+                    </span>
+                    <span style={{ fontSize: '0.8rem', opacity: 0.8, fontWeight: 800, color: '#2196f3', whiteSpace: 'normal', lineHeight: '1.3' }}>
+                      {fac.schoolName}
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '2px', background: 'transparent', padding: '0.3rem', border: '2px solid var(--border-color)', borderRadius: '4px', flexShrink: 0 }}>
+                    {renderStars(fac)}
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
+            )}
+          />
         </motion.div>
       ) : (
         <div className="faculty-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '2rem' }}>
@@ -456,35 +460,38 @@ const FacultyRatings = () => {
                 </span>
               </div>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '400px', overflowY: 'auto', paddingRight: '0.5rem' }}>
-                {school.faculty.map((fac, idx) => (
-                  <div 
-                    key={fac.id + '_' + idx}
-                    onClick={() => setSelectedFaculty({ ...fac, schoolName: school.schoolName })}
-                    style={{ 
-                      padding: '0.8rem 1rem', 
-                      background: '#f8f8f8', 
-                      border: '2px solid #111', 
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      cursor: 'pointer'
-                    }} 
-                    className="faculty-item hover-scale"
-                    title="Click to rate this faculty"
-                  >
-                    <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                      <span style={{ fontWeight: 800, whiteSpace: 'normal', fontSize: '0.9rem', lineHeight: '1.3' }}>
-                        {fac.name.replace(/^\d+\s+/, '')}
-                      </span>
-                    </div>
-                    <div style={{ display: 'flex', gap: '2px', background: 'transparent', padding: '0.3rem', border: '2px solid var(--border-color)', borderRadius: '4px', flexShrink: 0 }}>
-                      {renderStars(fac)}
+              <Virtuoso
+                style={{ height: '400px', width: '100%' }}
+                data={school.faculty}
+                itemContent={(idx, fac) => (
+                  <div style={{ paddingBottom: '0.5rem', paddingRight: '0.5rem' }}>
+                    <div 
+                      onClick={() => setSelectedFaculty({ ...fac, schoolName: school.schoolName })}
+                      style={{ 
+                        padding: '0.8rem 1rem', 
+                        background: '#f8f8f8', 
+                        border: '2px solid #111', 
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        cursor: 'pointer'
+                      }} 
+                      className="faculty-item hover-scale"
+                      title="Click to rate this faculty"
+                    >
+                      <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                        <span style={{ fontWeight: 800, whiteSpace: 'normal', fontSize: '0.9rem', lineHeight: '1.3' }}>
+                          {fac.name.replace(/^\d+\s+/, '')}
+                        </span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '2px', background: 'transparent', padding: '0.3rem', border: '2px solid var(--border-color)', borderRadius: '4px', flexShrink: 0 }}>
+                        {renderStars(fac)}
+                      </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                )}
+              />
             </motion.div>
           ))}
           

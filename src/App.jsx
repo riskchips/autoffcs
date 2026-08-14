@@ -676,8 +676,8 @@ function App() {
       </AnimatePresence>
 
       <footer style={{ textAlign: 'center', padding: '2rem', marginTop: '2rem', opacity: 0.8, fontSize: '0.9rem', fontWeight: 600 }}>
+        <p style={{ marginBottom: '0.5rem' }}>This site is an independent student project and is not affiliated with any university or institution.</p>
         <Link to="/terms" style={{ color: 'inherit', textDecoration: 'underline' }}>Terms & Disclaimer</Link>
-        <p style={{ marginTop: '0.5rem' }}>This site is not affiliated with VIT.</p>
       </footer>
 
     </div>

@@ -534,11 +534,6 @@ const FacultyRatings = () => {
           )}
         </div>
       )}
-      
-      <div style={{ textAlign: 'center', marginTop: '3rem', opacity: 0.7, fontSize: '0.9rem', fontWeight: 600 }}>
-        <p style={{ marginBottom: '0.5rem' }}>Data crowdsourced by students. This site is not affiliated with VIT.</p>
-        <Link to="/terms" style={{ color: 'inherit', textDecoration: 'underline' }}>Read our Terms & Conditions</Link>
-      </div>
     </div>
   );
 };

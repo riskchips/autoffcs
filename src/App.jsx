@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Settings, Play, ArrowLeft, ArrowRight, Code2, Briefcase, ExternalLink, Moon, Sun, Users, Calendar, X, Check, Download } from 'lucide-react';
 import html2canvas from 'html2canvas';
@@ -17,7 +18,7 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem('theme') === 'dark';
   });
-  const [activeTab, setActiveTab] = useState('timetable');
+  const location = useLocation();
   const [swapModalData, setSwapModalData] = useState(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
@@ -300,12 +301,12 @@ function App() {
             <button onClick={() => setIsDarkMode(!isDarkMode)} className="brutal-button" style={{ padding: '0.5rem', fontSize: '0.9rem', background: isDarkMode ? '#fff' : '#111', color: isDarkMode ? '#111' : '#fff' }}>
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />} {isDarkMode ? 'LIGHT' : 'DARK'}
             </button>
-            <button onClick={() => setActiveTab('timetable')} className="brutal-button" style={{ padding: '0.5rem', fontSize: '0.9rem', background: activeTab === 'timetable' ? 'var(--primary)' : '#fff' }}>
+            <Link to="/" className="brutal-button" style={{ padding: '0.5rem', fontSize: '0.9rem', textDecoration: 'none', background: location.pathname === '/' ? 'var(--primary)' : '#fff' }}>
               <Calendar size={20} color="#111" /> <span style={{ color: '#111' }}>TIMETABLE</span>
-            </button>
-            <button onClick={() => setActiveTab('faculty')} className="brutal-button" style={{ padding: '0.5rem', fontSize: '0.9rem', background: activeTab === 'faculty' ? 'var(--primary)' : '#fff' }}>
+            </Link>
+            <Link to="/faculty" className="brutal-button" style={{ padding: '0.5rem', fontSize: '0.9rem', textDecoration: 'none', background: location.pathname === '/faculty' ? 'var(--primary)' : '#fff' }}>
               <Users size={20} color="#111" /> <span style={{ color: '#111' }}>FACULTY</span>
-            </button>
+            </Link>
             <a href="https://github.com/riskchips" target="_blank" rel="noreferrer" className="brutal-button" style={{ padding: '0.5rem', fontSize: '0.9rem', background: '#fff' }}>
               <Code2 size={20} color="#111" /> <span style={{ color: '#111' }}>GITHUB</span>
             </a>
@@ -319,12 +320,11 @@ function App() {
         </div>
       </header>
 
-      <main className={activeTab === 'timetable' ? "layout-grid" : ""}>
-        
-        {/* SIDEBAR OR FACULTY RATINGS */}
-        {activeTab === 'timetable' ? (
-          <>
-            <div className="sidebar-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <main className={location.pathname === '/' ? "layout-grid" : ""}>
+        <Routes>
+          <Route path="/" element={
+            <>
+              <div className="sidebar-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           <div className="brutal-box">
             <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Settings /> CONFIG
@@ -604,9 +604,9 @@ function App() {
           )}
         </div>
           </>
-        ) : (
-          <FacultyRatings />
-        )}
+          } />
+          <Route path="/faculty" element={<FacultyRatings />} />
+        </Routes>
       </main>
 
       <AnimatePresence>

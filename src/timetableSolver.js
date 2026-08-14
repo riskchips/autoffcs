@@ -61,7 +61,7 @@ function cartesianProduct(arrays) {
   return first.flatMap(val => restCombinations.map(combo => [val, ...combo]));
 }
 
-export function generateTimetables(inputData) {
+export function generateTimetables(inputData, liveScores = null) {
   const courses = inputData.courses || [];
   const theoryPreference = inputData.preferences?.theory; 
   
@@ -78,11 +78,28 @@ export function generateTimetables(inputData) {
       requiredTypes.add(alloc.course_type);
       
       const slotInfo = getSlotInfo(alloc.slot);
+      
+      let finalScore = 3; // Default middle score
+      const staticScore = getFacultyScore(alloc.faculty);
+      
+      const match = alloc.faculty.match(/^([a-zA-Z0-9]+)/);
+      const facId = match ? match[1] : null;
+      
+      if (liveScores && facId && liveScores[facId] !== undefined) {
+        finalScore = liveScores[facId];
+      } else {
+        if (staticScore === 2) finalScore = 5;
+        else if (staticScore === 1) finalScore = 4;
+        else if (staticScore === 0) finalScore = 3;
+        else if (staticScore === -1) finalScore = 2;
+        else if (staticScore === -2) finalScore = 1;
+      }
+
       const allocWithMeta = {
         ...alloc,
         timeBlocks: Array.from(slotInfo.timeBlocks),
         period: slotInfo.period,
-        score: getFacultyScore(alloc.faculty)
+        score: finalScore
       };
       
       let keep = true;

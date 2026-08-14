@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 import { parseFFCSText } from './utils/parser';
 import { getAvailableBundles } from './utils/clashChecker';
 import FacultyRatings from './FacultyRatings';
+import NotFound from './NotFound';
 import './index.css';
 
 function App() {
@@ -606,6 +607,7 @@ function App() {
           </>
           } />
           <Route path="/faculty" element={<FacultyRatings />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
 

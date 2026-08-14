@@ -6,7 +6,7 @@ import vitFacultyData from '../vit-faculty.json';
 import { getFacultyScore } from '../data/facultyRatings';
 
 const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITEKEY;
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1'; // Default for local dev if not set
+const API_BASE = import.meta.env.VITE_API_URL || '/api/v1'; // Relative path works for both Vite proxy and Vercel
 
 // Dependency-free Virtual List
 const VirtualList = ({ items, itemHeight, containerHeight, renderItem }) => {

@@ -58,10 +58,24 @@ async function run() {
       if (rating > 0) {
         try {
           await db.query(
+            `INSERT IGNORE INTO faculty_reviews (faculty_id, rating, voter_hash) VALUES (?, ?, ?)`,
+            [fac.id, rating, 'legacy_static_data']
+          );
+          
+          // Recalculate average
+          const [[avgResult]] = await db.query(
+            'SELECT AVG(rating) as avg_rating, COUNT(*) as count FROM faculty_reviews WHERE faculty_id = ?',
+            [fac.id]
+          );
+          
+          const newAvg = avgResult.avg_rating || 0;
+          const newCount = avgResult.count || 0;
+
+          await db.query(
             `INSERT INTO faculty_averages (faculty_id, average_rating, total_reviews)
              VALUES (?, ?, ?)
              ON DUPLICATE KEY UPDATE average_rating = ?, total_reviews = ?`,
-            [fac.id, rating, 1, rating, 1]
+            [fac.id, newAvg, newCount, newAvg, newCount]
           );
           count++;
           console.log(`Migrated: ${cleanName} (${fac.id}) -> ${rating} stars`);

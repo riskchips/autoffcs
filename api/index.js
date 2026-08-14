@@ -18,7 +18,7 @@ const db = mysql.createPool({
 
 // Helper for Turnstile
 async function verifyTurnstile(token) {
-  const secretKey = process.env.TURNSTILE_SECRET_KEY;
+  const secretKey = process.env.TURNSTILE_TOKEN || process.env.TURNSTILE_SECRET_KEY;
   if (!secretKey) return false;
 
   try {

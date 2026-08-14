@@ -675,9 +675,26 @@ function App() {
         )}
       </AnimatePresence>
 
-      <footer style={{ textAlign: 'center', padding: '2rem', marginTop: '2rem', opacity: 0.8, fontSize: '0.9rem', fontWeight: 600 }}>
-        <p style={{ marginBottom: '0.5rem' }}>This site is an independent student project and is not affiliated with any university or institution.</p>
-        <Link to="/terms" style={{ color: 'inherit', textDecoration: 'underline' }}>Terms & Disclaimer</Link>
+      <footer style={{ textAlign: 'center', padding: '3rem 1rem 2rem', marginTop: '3rem', opacity: 1, fontSize: '0.9rem', fontWeight: 600, borderTop: '4px solid var(--border-color)' }}>
+        
+        <div style={{ marginBottom: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '2px', margin: 0 }}>Made By Arnab</h3>
+          
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <a href="https://github.com" target="_blank" rel="noreferrer" className="brutal-button" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#fff', color: '#111', textDecoration: 'none', padding: '0.5rem 1rem' }}>
+              <Code2 size={18} /> GITHUB
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="brutal-button" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#2196f3', color: '#fff', textDecoration: 'none', padding: '0.5rem 1rem' }}>
+              <Briefcase size={18} /> LINKEDIN
+            </a>
+            <a href="https://portfolio.com" target="_blank" rel="noreferrer" className="brutal-button" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#ff5722', color: '#fff', textDecoration: 'none', padding: '0.5rem 1rem' }}>
+              <ExternalLink size={18} /> PORTFOLIO
+            </a>
+          </div>
+        </div>
+
+        <p style={{ marginBottom: '0.5rem', opacity: 0.7 }}>This site is an independent student project and is not affiliated with any university or institution.</p>
+        <Link to="/terms" style={{ color: 'inherit', textDecoration: 'underline', opacity: 0.7 }}>Terms & Disclaimer</Link>
       </footer>
 
     </div>

@@ -445,7 +445,7 @@ const FacultyRatings = () => {
           
           <VirtualList 
             items={flatSearchResults}
-            itemHeight={85}
+            itemHeight={110}
             containerHeight={600}
             renderItem={(fac) => (
               <div 
@@ -465,10 +465,10 @@ const FacultyRatings = () => {
                 title="Click to rate this faculty"
               >
                 <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                  <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '1rem' }}>
+                  <span style={{ fontWeight: 800, whiteSpace: 'normal', wordBreak: 'break-word', fontSize: '1rem', lineHeight: '1.2', marginBottom: '0.2rem' }}>
                     {fac.name.replace(/^\d+\s+/, '')}
                   </span>
-                  <span style={{ fontSize: '0.8rem', opacity: 0.8, fontWeight: 800, color: '#2196f3', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <span style={{ fontSize: '0.8rem', opacity: 0.8, fontWeight: 800, color: '#2196f3', whiteSpace: 'normal', wordBreak: 'break-word', lineHeight: '1.2' }}>
                     {fac.schoolName}
                   </span>
                 </div>

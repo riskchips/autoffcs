@@ -333,6 +333,6 @@ export function generateTimetables(inputData, liveScores = null) {
 
   return {
     globallyDropped,
-    timetables: results.slice(0, 20) // Return top 20
+    timetables: results.slice(0, 80) // Return top 80
   };
 }

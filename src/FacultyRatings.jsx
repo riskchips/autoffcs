@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useDeferredValue, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Search, Star, Building2, X, AlertCircle, CheckCircle } from 'lucide-react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import vitFacultyData from '../vit-faculty.json';
@@ -533,6 +534,11 @@ const FacultyRatings = () => {
           )}
         </div>
       )}
+      
+      <div style={{ textAlign: 'center', marginTop: '3rem', opacity: 0.7, fontSize: '0.9rem', fontWeight: 600 }}>
+        <p style={{ marginBottom: '0.5rem' }}>Data crowdsourced by students. This site is not affiliated with VIT.</p>
+        <Link to="/terms" style={{ color: 'inherit', textDecoration: 'underline' }}>Read our Terms & Conditions</Link>
+      </div>
     </div>
   );
 };

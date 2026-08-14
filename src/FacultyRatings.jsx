@@ -9,47 +9,7 @@ import { getFacultyScore } from '../data/facultyRatings';
 const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITEKEY || import.meta.env.TURNSTILE_SITEKEY;
 const API_BASE = import.meta.env.VITE_API_URL || '/api/v1'; // Relative path works for both Vite proxy and Vercel
 
-// Dependency-free Virtual List
-const VirtualList = ({ items, itemHeight, containerHeight, renderItem }) => {
-  const [scrollTop, setScrollTop] = useState(0);
-  const scrollRef = useRef(null);
-  
-  // Reset scroll when items change (e.g. during search)
-  useEffect(() => {
-    setScrollTop(0);
-    if (scrollRef.current) scrollRef.current.scrollTop = 0;
-  }, [items]);
-  
-  const startIndex = Math.floor(scrollTop / itemHeight);
-  const visibleItemCount = Math.ceil(containerHeight / itemHeight);
-  
-  const renderStartIndex = Math.max(0, startIndex - 2);
-  const renderEndIndex = Math.min(items.length - 1, startIndex + visibleItemCount + 2);
-  
-  const visibleItems = [];
-  for (let i = renderStartIndex; i <= renderEndIndex; i++) {
-    if (items[i]) {
-      visibleItems.push(
-        <div key={i} style={{ position: 'absolute', top: i * itemHeight, width: '100%', height: itemHeight, padding: '0.25rem 0.5rem' }}>
-          {renderItem(items[i], i)}
-        </div>
-      );
-    }
-  }
-  
-  return (
-    <div 
-      ref={scrollRef}
-      style={{ height: containerHeight, width: '100%', overflowY: 'auto', position: 'relative' }} 
-      onScroll={e => setScrollTop(e.target.scrollTop)}
-      className="faculty-list-scroll"
-    >
-      <div style={{ height: items.length * itemHeight, position: 'relative' }}>
-        {visibleItems}
-      </div>
-    </div>
-  );
-};
+
 
 const RatingModal = ({ faculty, onClose, onRatingSubmitted }) => {
   const [rating, setRating] = useState(0);
@@ -443,16 +403,13 @@ const FacultyRatings = () => {
             </span>
           </div>
           
-          <VirtualList 
-            items={flatSearchResults}
-            itemHeight={110}
-            containerHeight={600}
-            renderItem={(fac) => (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '600px', overflowY: 'auto', paddingRight: '0.5rem' }}>
+            {flatSearchResults.map((fac, idx) => (
               <div 
+                key={fac.id + '_' + idx}
                 onClick={() => setSelectedFaculty(fac)}
                 style={{ 
-                  height: '100%',
-                  padding: '0 1rem', 
+                  padding: '1rem', 
                   background: '#f8f8f8', 
                   border: '2px solid #111', 
                   display: 'flex',
@@ -465,10 +422,10 @@ const FacultyRatings = () => {
                 title="Click to rate this faculty"
               >
                 <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                  <span style={{ fontWeight: 800, whiteSpace: 'normal', wordBreak: 'break-word', fontSize: '1rem', lineHeight: '1.2', marginBottom: '0.2rem' }}>
+                  <span style={{ fontWeight: 800, whiteSpace: 'normal', fontSize: '1rem', lineHeight: '1.3', marginBottom: '0.2rem' }}>
                     {fac.name.replace(/^\d+\s+/, '')}
                   </span>
-                  <span style={{ fontSize: '0.8rem', opacity: 0.8, fontWeight: 800, color: '#2196f3', whiteSpace: 'normal', wordBreak: 'break-word', lineHeight: '1.2' }}>
+                  <span style={{ fontSize: '0.8rem', opacity: 0.8, fontWeight: 800, color: '#2196f3', whiteSpace: 'normal', lineHeight: '1.3' }}>
                     {fac.schoolName}
                   </span>
                 </div>
@@ -476,8 +433,8 @@ const FacultyRatings = () => {
                   {renderStars(fac)}
                 </div>
               </div>
-            )}
-          />
+            ))}
+          </div>
         </motion.div>
       ) : (
         <div className="faculty-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '2rem' }}>
@@ -499,16 +456,13 @@ const FacultyRatings = () => {
                 </span>
               </div>
               
-              <VirtualList 
-                items={school.faculty}
-                itemHeight={85}
-                containerHeight={400}
-                renderItem={(fac) => (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '400px', overflowY: 'auto', paddingRight: '0.5rem' }}>
+                {school.faculty.map((fac, idx) => (
                   <div 
+                    key={fac.id + '_' + idx}
                     onClick={() => setSelectedFaculty({ ...fac, schoolName: school.schoolName })}
                     style={{ 
-                      height: '100%',
-                      padding: '0 1rem', 
+                      padding: '0.8rem 1rem', 
                       background: '#f8f8f8', 
                       border: '2px solid #111', 
                       display: 'flex',
@@ -521,7 +475,7 @@ const FacultyRatings = () => {
                     title="Click to rate this faculty"
                   >
                     <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                      <span style={{ fontWeight: 800, whiteSpace: 'normal', wordBreak: 'break-word', fontSize: '0.9rem', lineHeight: '1.2' }}>
+                      <span style={{ fontWeight: 800, whiteSpace: 'normal', fontSize: '0.9rem', lineHeight: '1.3' }}>
                         {fac.name.replace(/^\d+\s+/, '')}
                       </span>
                     </div>
@@ -529,8 +483,8 @@ const FacultyRatings = () => {
                       {renderStars(fac)}
                     </div>
                   </div>
-                )}
-              />
+                ))}
+              </div>
             </motion.div>
           ))}
           

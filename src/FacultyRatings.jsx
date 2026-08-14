@@ -501,7 +501,7 @@ const FacultyRatings = () => {
               
               <VirtualList 
                 items={school.faculty}
-                itemHeight={70}
+                itemHeight={85}
                 containerHeight={400}
                 renderItem={(fac) => (
                   <div 
@@ -521,7 +521,7 @@ const FacultyRatings = () => {
                     title="Click to rate this faculty"
                   >
                     <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                      <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.9rem' }}>
+                      <span style={{ fontWeight: 800, whiteSpace: 'normal', wordBreak: 'break-word', fontSize: '0.9rem', lineHeight: '1.2' }}>
                         {fac.name.replace(/^\d+\s+/, '')}
                       </span>
                     </div>

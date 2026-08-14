@@ -290,7 +290,7 @@ function App() {
           <h1 className="app-title">AUTOFFCS</h1>
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
             <span className="app-subtitle" style={{ marginTop: 0 }}>
-              TIMETABLE GENERATOR
+              AUTOMATIC TIMETABLE GENERATOR
             </span>
             <span className="app-subtitle" style={{ marginTop: 0, background: '#e91e63' }}>
               TRAINED OVER VARIOUS FACULTIES REVIEWS

@@ -74,7 +74,11 @@ let cachedRatings = null;
 async function refreshRatingsCache() {
   try {
     const [rows] = await db.query('SELECT faculty_id, average_rating, total_reviews FROM faculty_averages');
-    cachedRatings = rows;
+    cachedRatings = rows.map(row => ({
+      ...row,
+      average_rating: parseFloat(row.average_rating),
+      total_reviews: parseInt(row.total_reviews, 10)
+    }));
   } catch (dbErr) {
     console.error('Error fetching live scores from DB for cache:', dbErr);
   }

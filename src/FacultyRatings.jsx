@@ -137,7 +137,7 @@ const RatingModal = ({ faculty, onClose, onRatingSubmitted }) => {
 
         <div>
           <h3 style={{ margin: '0 0 0.5rem 0' }}>{faculty.name.replace(/^\d+\s+/, '')}</h3>
-          <span style={{ fontSize: '0.9rem', fontWeight: 'bold', opacity: 0.7 }}>ID: {faculty.id} | {faculty.schoolName}</span>
+          <span style={{ fontSize: '0.9rem', fontWeight: 'bold', opacity: 0.7 }}>{faculty.schoolName}</span>
         </div>
 
         {success ? (
@@ -355,7 +355,7 @@ const FacultyRatings = () => {
     const term = deferredSearchTerm.toLowerCase();
     
     const mapped = vitFacultyData.map(school => {
-      const matchingFaculty = school.faculty.filter(f => f.name.toLowerCase().includes(term) || f.id.includes(term));
+      const matchingFaculty = school.faculty.filter(f => f.name.toLowerCase().includes(term));
       if (matchingFaculty.length > 0) {
         let exactMatches = 0;
         matchingFaculty.forEach(f => {
@@ -409,7 +409,7 @@ const FacultyRatings = () => {
           <input 
             type="text" 
             className="brutal-input" 
-            placeholder="SEARCH BY NAME OR ID..."
+            placeholder="SEARCH BY NAME..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ width: '100%', fontSize: '1.2rem', padding: '0.8rem', paddingRight: '3rem' }}
@@ -466,7 +466,7 @@ const FacultyRatings = () => {
               >
                 <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
                   <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '1rem' }}>
-                    {fac.name.replace(/^\d+\s+/, '')} <span style={{ fontSize: '0.7rem', opacity: 0.6, fontWeight: 700 }}>({fac.id})</span>
+                    {fac.name.replace(/^\d+\s+/, '')}
                   </span>
                   <span style={{ fontSize: '0.8rem', opacity: 0.8, fontWeight: 800, color: '#2196f3', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {fac.schoolName}
@@ -524,7 +524,6 @@ const FacultyRatings = () => {
                       <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.9rem' }}>
                         {fac.name.replace(/^\d+\s+/, '')}
                       </span>
-                      <span style={{ fontSize: '0.7rem', opacity: 0.6, fontWeight: 700 }}>ID: {fac.id}</span>
                     </div>
                     <div style={{ display: 'flex', gap: '2px', background: 'transparent', padding: '0.3rem', border: '2px solid var(--border-color)', borderRadius: '4px', flexShrink: 0 }}>
                       {renderStars(fac)}

@@ -329,14 +329,9 @@ function App() {
             <>
               <div className="sidebar-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           <div className="brutal-box">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <h2 style={{ fontSize: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
-                <Settings /> CONFIG
-              </h2>
-              <Link to="/how-to-use" className="brutal-button" style={{ background: '#2196f3', color: '#fff', fontSize: '0.9rem', padding: '0.3rem 0.6rem', textDecoration: 'none' }}>
-                HOW TO USE
-              </Link>
-            </div>
+            <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Settings /> CONFIG
+            </h2>
             
             <label style={{ fontWeight: 700, display: 'block', marginBottom: '0.5rem' }}>PASTE VTOP DATA</label>
             <textarea 
@@ -609,7 +604,14 @@ function App() {
               <h2 style={{ fontSize: '2rem', opacity: 0.5 }}>NO DATA</h2>
               <p style={{ fontWeight: 600, opacity: 0.6 }}>Paste your courses and hit GENERATE to see the magic.</p>
             </div>
+            </div>
           )}
+        </div>
+          
+        <div style={{ gridColumn: '1 / -1', marginTop: '2rem', display: 'flex', justifyContent: 'center' }}>
+          <Link to="/how-to-use" className="brutal-button" style={{ background: '#e91e63', color: '#fff', fontSize: '1.2rem', padding: '1rem 3rem', textDecoration: 'none', display: 'inline-block' }}>
+            HOW TO USE THIS GENERATOR?
+          </Link>
         </div>
           </>
           } />

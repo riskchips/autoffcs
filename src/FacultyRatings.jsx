@@ -230,6 +230,7 @@ const FacultyRatings = () => {
   const deferredSearchTerm = useDeferredValue(searchTerm);
   
   const [apiRatings, setApiRatings] = useState({});
+  const [isLoadingRatings, setIsLoadingRatings] = useState(true);
   const [selectedFaculty, setSelectedFaculty] = useState(null);
 
   // Fetch real ratings from API
@@ -250,6 +251,8 @@ const FacultyRatings = () => {
         }
       } catch (err) {
         console.error("Failed to fetch API ratings:", err);
+      } finally {
+        setIsLoadingRatings(false);
       }
     };
     fetchRatings();
@@ -285,8 +288,8 @@ const FacultyRatings = () => {
       else if (average >= 2.5) color = '#ff9800';
       else color = '#f44336';
       
-    } else {
-      // Fallback to hardcoded scores
+    } else if (!isLoadingRatings) {
+      // Fallback to hardcoded scores only after loading finishes
       const cleanName = fac.name.replace(/^\d+\s+/, '');
       const score = getFacultyScore(cleanName);
       

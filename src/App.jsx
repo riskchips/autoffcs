@@ -599,7 +599,6 @@ function App() {
               <h2 style={{ fontSize: '2rem', opacity: 0.5 }}>NO DATA</h2>
               <p style={{ fontWeight: 600, opacity: 0.6 }}>Paste your courses and hit GENERATE to see the magic.</p>
             </div>
-            </div>
           )}
         </div>
           </>

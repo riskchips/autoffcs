@@ -8,6 +8,7 @@ import { getAvailableBundles } from './utils/clashChecker';
 import FacultyRatings from './FacultyRatings';
 import NotFound from './NotFound';
 import Terms from './Terms';
+import HowToUse from './HowToUse';
 import './index.css';
 
 function App() {
@@ -328,9 +329,14 @@ function App() {
             <>
               <div className="sidebar-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           <div className="brutal-box">
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Settings /> CONFIG
-            </h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+              <h2 style={{ fontSize: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+                <Settings /> CONFIG
+              </h2>
+              <Link to="/how-to-use" className="brutal-button" style={{ background: '#2196f3', color: '#fff', fontSize: '0.9rem', padding: '0.3rem 0.6rem', textDecoration: 'none' }}>
+                HOW TO USE
+              </Link>
+            </div>
             
             <label style={{ fontWeight: 700, display: 'block', marginBottom: '0.5rem' }}>PASTE VTOP DATA</label>
             <textarea 
@@ -609,6 +615,7 @@ function App() {
           } />
           <Route path="/faculty" element={<FacultyRatings />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/how-to-use" element={<HowToUse />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

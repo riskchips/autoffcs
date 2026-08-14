@@ -314,6 +314,11 @@ const FacultyRatings = () => {
             />
           ))}
         </div>
+        {apiRatings[fac.id] && (
+          <span style={{ fontSize: '0.75rem', opacity: 0.6, fontWeight: 700, minWidth: '24px' }}>
+            ({apiRatings[fac.id].count})
+          </span>
+        )}
       </div>
     );
   };

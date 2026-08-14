@@ -481,7 +481,7 @@ const FacultyRatings = () => {
                       title="Click to rate this faculty"
                     >
                       <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                        <span style={{ fontWeight: 800, whiteSpace: 'normal', fontSize: '0.9rem', lineHeight: '1.3' }}>
+                        <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.9rem', lineHeight: '1.3' }}>
                           {fac.name.replace(/^\d+\s+/, '')}
                         </span>
                       </div>

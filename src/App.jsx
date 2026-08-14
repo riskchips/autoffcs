@@ -7,6 +7,7 @@ import { parseFFCSText } from './utils/parser';
 import { getAvailableBundles } from './utils/clashChecker';
 import FacultyRatings from './FacultyRatings';
 import NotFound from './NotFound';
+import Terms from './Terms';
 import './index.css';
 
 function App() {
@@ -607,6 +608,7 @@ function App() {
           </>
           } />
           <Route path="/faculty" element={<FacultyRatings />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
@@ -672,6 +674,11 @@ function App() {
           </div>
         )}
       </AnimatePresence>
+
+      <footer style={{ textAlign: 'center', padding: '2rem', marginTop: '2rem', opacity: 0.8, fontSize: '0.9rem', fontWeight: 600 }}>
+        <Link to="/terms" style={{ color: 'inherit', textDecoration: 'underline' }}>Terms & Disclaimer</Link>
+        <p style={{ marginTop: '0.5rem' }}>This site is not affiliated with VIT.</p>
+      </footer>
 
     </div>
   );

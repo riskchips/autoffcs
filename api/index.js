@@ -37,6 +37,19 @@ async function verifyTurnstile(token) {
   }
 }
 
+// Helper for VPN/Proxy Detection
+async function checkVPN(ip) {
+  if (!ip || ip === 'unknown' || ip === '127.0.0.1' || ip === '::1') return false;
+  try {
+    const response = await fetch(`http://ip-api.com/json/${ip}?fields=proxy,hosting`);
+    const data = await response.json();
+    return data.proxy === true || data.hosting === true;
+  } catch (err) {
+    console.error('VPN Check error:', err);
+    return false; // Fail open to not block legitimate users if the API drops
+  }
+}
+
 const app = express();
 
 // Middleware
@@ -145,8 +158,17 @@ app.post('/api/v1/faculty/rate', async (req, res) => {
       return res.status(403).json({ error: 'CAPTCHA verification failed.' });
     }
 
+    // Extract IP Address
+    const rawIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+    const ip = rawIp.split(',')[0].trim();
+    
+    // VPN / Proxy Check
+    const isVPN = await checkVPN(ip);
+    if (isVPN) {
+      return res.status(403).json({ error: 'VPNs and Proxies are not allowed.' });
+    }
+
     // Generate Voter Hash
-    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
     const userAgent = req.headers['user-agent'] || 'unknown';
     const voterHash = crypto.createHash('sha256').update(`${ip}-${userAgent}`).digest('hex');
 

@@ -52,21 +52,33 @@ async function checkVPN(ip) {
 
 const app = express();
 
+// Trust Vercel's reverse proxy so rate limiting works per user IP instead of blocking globally
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Global Rate Limiter: 5 requests per minute
-const limiter = rateLimit({
+// Global Rate Limiter: 100 requests per minute for general API usage (generating timetables, fetching ratings)
+const generalLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  max: 5,
+  max: 100,
   message: {
     error: 'Too many requests, please try again later.'
   }
 });
 
-// Apply rate limiter to the API
-app.use('/api/', limiter);
+// Strict Rate Limiter: 5 requests per minute for sensitive actions (voting)
+const strictLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 5,
+  message: {
+    error: 'You are submitting ratings too quickly. Please slow down.'
+  }
+});
+
+// Apply general rate limiter to all APIs by default
+app.use('/api/', generalLimiter);
 
 // POST Endpoint for timetable generation
 let cachedRatings = null;
@@ -143,8 +155,8 @@ app.get('/api/v1/faculty/ratings', async (req, res) => {
   }
 });
 
-// POST a new rating
-app.post('/api/v1/faculty/rate', async (req, res) => {
+// POST a new rating (Protected by strict rate limiter)
+app.post('/api/v1/faculty/rate', strictLimiter, async (req, res) => {
   try {
     const { faculty_id, rating, turnstileToken } = req.body;
 

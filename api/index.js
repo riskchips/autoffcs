@@ -16,8 +16,21 @@ const db = mysql.createPool({
   queueLimit: 0
 });
 
+// In-memory cache for used tokens to prevent replay attacks
+const usedTokens = new Set();
+
+// Clear tokens every hour to prevent memory leaks
+setInterval(() => {
+  usedTokens.clear();
+}, 60 * 60 * 1000);
+
 // Helper for Turnstile
 async function verifyTurnstile(token) {
+  if (usedTokens.has(token)) {
+    console.warn('Replay attack prevented: Turnstile token already used.');
+    return false;
+  }
+
   const secretKey = process.env.TURNSTILE_TOKEN || process.env.TURNSTILE_SECRET_KEY;
   if (!secretKey) return false;
 
@@ -30,6 +43,11 @@ async function verifyTurnstile(token) {
       body: `secret=${encodeURIComponent(secretKey)}&response=${encodeURIComponent(token)}`
     });
     const data = await response.json();
+    
+    if (data.success) {
+      usedTokens.add(token);
+    }
+    
     return data.success;
   } catch (err) {
     console.error('Turnstile verification error:', err);

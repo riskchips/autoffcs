@@ -5,7 +5,7 @@ import { Turnstile } from '@marsidev/react-turnstile';
 import vitFacultyData from '../vit-faculty.json';
 import { getFacultyScore } from '../data/facultyRatings';
 
-const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITEKEY;
+const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITEKEY || import.meta.env.TURNSTILE_SITEKEY;
 const API_BASE = import.meta.env.VITE_API_URL || '/api/v1'; // Relative path works for both Vite proxy and Vercel
 
 // Dependency-free Virtual List

@@ -10,7 +10,7 @@ import CryptoJS from 'crypto-js';
 
 const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITEKEY || import.meta.env.TURNSTILE_SITEKEY;
 const API_BASE = import.meta.env.VITE_API_URL || '/api/v1'; // Relative path works for both Vite proxy and Vercel
-const SECRET_KEY = import.meta.env.ENCRYPTION_KEY;
+const SECRET_KEY = import.meta.env.ENCRYPTION_KEY || 'c3f9b2d8e4a175608c9d4b1a2e3f5c7d8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d';
 
 
 
@@ -38,9 +38,9 @@ const RatingModal = ({ faculty, onClose, onRatingSubmitted }) => {
 
     try {
       const payload = {
-        faculty_id: faculty.id,
-        rating,
-        turnstileToken
+        _f: faculty.id,
+        _r: rating,
+        _t: turnstileToken
       };
       
       const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(payload), SECRET_KEY).toString();
@@ -51,7 +51,7 @@ const RatingModal = ({ faculty, onClose, onRatingSubmitted }) => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ data: encryptedData })
+        body: JSON.stringify({ _p: encryptedData })
       });
 
       const data = await res.json();

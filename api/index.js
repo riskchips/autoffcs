@@ -188,21 +188,22 @@ app.get('/api/v1/faculty/ratings', async (req, res) => {
 // POST a new rating (Protected by strict rate limiter and daily IP limiter)
 app.post('/api/v1/faculty/rate', strictLimiter, dailyIpLimiter, async (req, res) => {
   try {
-    const encryptedData = req.body.data;
+    const encryptedData = req.body._p;
     if (!encryptedData) {
       return res.status(400).json({ error: 'Payload is missing or unencrypted.' });
     }
 
     let decryptedPayload;
     try {
-      const bytes = CryptoJS.AES.decrypt(encryptedData, process.env.ENCRYPTION_KEY);
+      const secret = process.env.ENCRYPTION_KEY || 'c3f9b2d8e4a175608c9d4b1a2e3f5c7d8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d';
+      const bytes = CryptoJS.AES.decrypt(encryptedData, secret);
       const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
       decryptedPayload = JSON.parse(decryptedString);
     } catch (e) {
       return res.status(400).json({ error: 'Payload decryption failed.' });
     }
 
-    const { faculty_id, rating, turnstileToken } = decryptedPayload;
+    const { _f: faculty_id, _r: rating, _t: turnstileToken } = decryptedPayload;
 
     if (!faculty_id || !rating || typeof rating !== 'number' || rating < 1 || rating > 5) {
       return res.status(400).json({ error: 'Invalid faculty ID or rating (must be 1-5).' });

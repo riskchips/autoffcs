@@ -195,7 +195,7 @@ app.post('/api/v1/faculty/rate', strictLimiter, dailyIpLimiter, async (req, res)
 
     let decryptedPayload;
     try {
-      const bytes = CryptoJS.AES.decrypt(encryptedData, process.env.VITE_ENCRYPTION_KEY);
+      const bytes = CryptoJS.AES.decrypt(encryptedData, process.env.ENCRYPTION_KEY);
       const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
       decryptedPayload = JSON.parse(decryptedString);
     } catch (e) {

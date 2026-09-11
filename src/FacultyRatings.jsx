@@ -10,7 +10,7 @@ import CryptoJS from 'crypto-js';
 
 const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITEKEY || import.meta.env.TURNSTILE_SITEKEY;
 const API_BASE = import.meta.env.VITE_API_URL || '/api/v1'; // Relative path works for both Vite proxy and Vercel
-const SECRET_KEY = import.meta.env.VITE_ENCRYPTION_KEY;
+const SECRET_KEY = import.meta.env.ENCRYPTION_KEY;
 
 
 

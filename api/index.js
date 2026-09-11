@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import { generateTimetables } from '../src/timetableSolver.js';
 import dotenv from 'dotenv';
@@ -74,8 +75,9 @@ const app = express();
 app.set('trust proxy', 1);
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 // Global Rate Limiter: 100 requests per minute for general API usage (generating timetables, fetching ratings)
 const generalLimiter = rateLimit({
@@ -202,19 +204,62 @@ app.post('/api/v1/faculty/rate', strictLimiter, async (req, res) => {
       return res.status(403).json({ error: 'VPNs and Proxies are not allowed.' });
     }
 
-    // Generate Voter Hash
-    const userAgent = req.headers['user-agent'] || 'unknown';
-    const voterHash = crypto.createHash('sha256').update(`${ip}-${userAgent}`).digest('hex');
+    // Handle Anonymous Reviewer Cookie
+    let token = req.cookies['__Host-reviewer_id'];
+    let isNewToken = false;
+    
+    if (!token) {
+      token = crypto.randomBytes(32).toString('base64url');
+      isNewToken = true;
+      res.cookie('__Host-reviewer_id', token, {
+        maxAge: 31536000000, // 1 year
+        secure: true,
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/'
+      });
+    }
 
-    // Insert review (will fail if duplicate voterHash + faculty_id)
+    const reviewerTokenHash = crypto.createHash('sha256').update(token).digest('hex');
+    let reviewer_id;
+
+    if (isNewToken) {
+      // Insert new anonymous reviewer
+      const [insertResult] = await db.query(
+        'INSERT INTO anonymous_reviewers (reviewer_token_hash) VALUES (?)',
+        [reviewerTokenHash]
+      );
+      reviewer_id = insertResult.insertId;
+    } else {
+      // Look up existing reviewer
+      const [rows] = await db.query(
+        'SELECT id FROM anonymous_reviewers WHERE reviewer_token_hash = ?',
+        [reviewerTokenHash]
+      );
+      
+      if (rows.length > 0) {
+        reviewer_id = rows[0].id;
+        // Update last seen
+        await db.query('UPDATE anonymous_reviewers SET last_seen_at = CURRENT_TIMESTAMP WHERE id = ?', [reviewer_id]);
+      } else {
+        // Token exists but not in DB (e.g. DB wiped), recreate it
+        const [insertResult] = await db.query(
+          'INSERT INTO anonymous_reviewers (reviewer_token_hash) VALUES (?)',
+          [reviewerTokenHash]
+        );
+        reviewer_id = insertResult.insertId;
+      }
+    }
+
+    // Insert review (will fail if duplicate reviewer_id + faculty_id)
     try {
       await db.query(
-        'INSERT INTO faculty_reviews (faculty_id, rating, voter_hash) VALUES (?, ?, ?)',
-        [faculty_id, rating, voterHash]
+        'INSERT INTO faculty_reviews (faculty_id, rating, reviewer_id) VALUES (?, ?, ?)',
+        [faculty_id, rating, reviewer_id]
       );
     } catch (dbErr) {
       if (dbErr.code === 'ER_DUP_ENTRY') {
-        return res.status(429).json({ error: 'You have already rated this faculty.' });
+        return res.status(409).json({ error: 'You have already reviewed this faculty.' });
       }
       throw dbErr;
     }

@@ -37,6 +37,7 @@ const RatingModal = ({ faculty, onClose, onRatingSubmitted }) => {
     try {
       const res = await fetch(`${API_BASE}/faculty/rate`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },

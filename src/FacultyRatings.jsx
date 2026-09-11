@@ -6,9 +6,11 @@ import { Turnstile } from '@marsidev/react-turnstile';
 import { Virtuoso } from 'react-virtuoso';
 import vitFacultyData from '../vit-faculty.json';
 import { getFacultyScore } from '../data/facultyRatings';
+import CryptoJS from 'crypto-js';
 
 const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITEKEY || import.meta.env.TURNSTILE_SITEKEY;
 const API_BASE = import.meta.env.VITE_API_URL || '/api/v1'; // Relative path works for both Vite proxy and Vercel
+const SECRET_KEY = import.meta.env.VITE_ENCRYPTION_KEY;
 
 
 
@@ -35,17 +37,21 @@ const RatingModal = ({ faculty, onClose, onRatingSubmitted }) => {
     setError(null);
 
     try {
+      const payload = {
+        faculty_id: faculty.id,
+        rating,
+        turnstileToken
+      };
+      
+      const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(payload), SECRET_KEY).toString();
+
       const res = await fetch(`${API_BASE}/faculty/rate`, {
         method: 'POST',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          faculty_id: faculty.id,
-          rating,
-          turnstileToken
-        })
+        body: JSON.stringify({ data: encryptedData })
       });
 
       const data = await res.json();

@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit';
 import { generateTimetables } from '../src/timetableSolver.js';
 import dotenv from 'dotenv';
 import crypto from 'crypto';
+import CryptoJS from 'crypto-js';
 import mysql from 'mysql2/promise';
 
 dotenv.config();
@@ -97,6 +98,15 @@ const strictLimiter = rateLimit({
   }
 });
 
+// Daily IP Rate Limiter: 50 requests per day per IP
+const dailyIpLimiter = rateLimit({
+  windowMs: 24 * 60 * 60 * 1000, // 24 hours
+  max: 50,
+  message: {
+    error: 'Daily review limit reached for your IP.'
+  }
+});
+
 // Apply general rate limiter to all APIs by default
 app.use('/api/', generalLimiter);
 
@@ -175,10 +185,24 @@ app.get('/api/v1/faculty/ratings', async (req, res) => {
   }
 });
 
-// POST a new rating (Protected by strict rate limiter)
-app.post('/api/v1/faculty/rate', strictLimiter, async (req, res) => {
+// POST a new rating (Protected by strict rate limiter and daily IP limiter)
+app.post('/api/v1/faculty/rate', strictLimiter, dailyIpLimiter, async (req, res) => {
   try {
-    const { faculty_id, rating, turnstileToken } = req.body;
+    const encryptedData = req.body.data;
+    if (!encryptedData) {
+      return res.status(400).json({ error: 'Payload is missing or unencrypted.' });
+    }
+
+    let decryptedPayload;
+    try {
+      const bytes = CryptoJS.AES.decrypt(encryptedData, process.env.VITE_ENCRYPTION_KEY);
+      const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
+      decryptedPayload = JSON.parse(decryptedString);
+    } catch (e) {
+      return res.status(400).json({ error: 'Payload decryption failed.' });
+    }
+
+    const { faculty_id, rating, turnstileToken } = decryptedPayload;
 
     if (!faculty_id || !rating || typeof rating !== 'number' || rating < 1 || rating > 5) {
       return res.status(400).json({ error: 'Invalid faculty ID or rating (must be 1-5).' });
@@ -241,6 +265,16 @@ app.post('/api/v1/faculty/rate', strictLimiter, async (req, res) => {
         reviewer_id = rows[0].id;
         // Update last seen
         await db.query('UPDATE anonymous_reviewers SET last_seen_at = CURRENT_TIMESTAMP WHERE id = ?', [reviewer_id]);
+        
+        // Enforce Daily Cookie Limit (Max 50 per day)
+        const [cookieRows] = await db.query(
+          "SELECT COUNT(*) as count FROM faculty_reviews WHERE reviewer_id = ? AND created_at >= NOW() - INTERVAL 1 DAY",
+          [reviewer_id]
+        );
+        if (cookieRows[0].count >= 50) {
+          return res.status(429).json({ error: 'Daily review limit reached for this browser.' });
+        }
+
       } else {
         // Token exists but not in DB (e.g. DB wiped), recreate it
         const [insertResult] = await db.query(
